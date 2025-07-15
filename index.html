@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Management Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ff5a5f;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f7f7f7;
+            color: #222;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.08);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: #ff5a5f;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #ff5a5f;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #e74c51;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #484848;
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #f7f7f7;
+            border-color: #c4c4c4;
+        }
+
+        .btn-secondary.active {
+            background: #ff5a5f;
+            color: white;
+            border-color: #ff5a5f;
+        }
+
+        .role-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f7f7f7;
+            padding: 5px;
+            border-radius: 8px;
+        }
+
+        .role-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            background: transparent;
+            color: #717171;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .role-btn:hover {
+            background: rgba(0,0,0,0.05);
+        }
+
+        .role-btn.active {
+            background: #ff5a5f;
+            color: white;
+        }
+
+        .section {
+            display: none;
+            margin-top: 30px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+            margin-bottom: 20px;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #ebebeb;
+            transition: all 0.2s ease;
+        }
+
+        .stat-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 600;
+            color: #222;
+            margin: 8px 0;
+        }
+
+        .stat-label {
+            color: #717171;
+            font-size: 14px;
+        }
+
+        .stat-change {
+            font-size: 14px;
+            color: #008a05;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .stat-change.negative {
+            color: #c13515;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: #ff5a5f;
+        }
+
+        .category-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .category-tab {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            background: white;
+            color: #484848;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .category-tab.active {
+            background: #ff5a5f;
+            color: white;
+            border-color: #ff5a5f;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .menu-item {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid #ebebeb;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .menu-item:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-color: var(--primary-color);
+        }
+
+        .menu-item.selected {
+            border-color: var(--primary-color);
+            background: #fff5f5;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .quantity-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .quantity-btn:hover {
+            background: #f7f7f7;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #484848;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #ff5a5f;
+        }
+
+        .time-filter {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .time-btn {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: white;
+            color: #484848;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .time-btn.active {
+            background: #ff5a5f;
+            color: white;
+            border-color: #ff5a5f;
+        }
+
+        .chart-container {
+            height: 300px;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .order-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ebebeb;
+            margin-bottom: 16px;
+            transition: all 0.2s ease;
+        }
+
+        .order-card.delayed {
+            border-color: #ffb400;
+            background: #fffbf0;
+        }
+
+        .order-card.urgent {
+            border-color: #c13515;
+            background: #fff5f5;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .order-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .status-preparing {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-ready {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .table th {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 2px solid #e5e5e5;
+            color: #484848;
+            font-weight: 600;
+        }
+
+        .table td {
+            padding: 12px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .badge.success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge.danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .close-modal {
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+            color: #717171;
+            transition: color 0.2s ease;
+        }
+
+        .close-modal:hover {
+            color: #222;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .nav {
+                flex-direction: column;
+            }
+            
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">RestaurantIQ</div>
+                <div class="nav-buttons">
+                    <div class="role-selector">
+                        <button class="role-btn active" onclick="setRole('admin')">Admin</button>
+                        <button class="role-btn" onclick="setRole('waiter')">Waiter</button>
+                        <button class="role-btn" onclick="setRole('chef')">Chef</button>
+                        <button class="role-btn" onclick="setRole('biller')">Biller</button>
+                    </div>
+                    <button class="btn btn-secondary active" id="nav-order" onclick="showSection('order')">Orders</button>
+                    <button class="btn btn-secondary" id="nav-insights" onclick="showSection('insights')">Insights</button>
+                    <button class="btn btn-secondary" id="nav-analytics" onclick="showSection('analytics')">Analytics</button>
+                    <button class="btn btn-secondary" id="nav-kitchen" onclick="showSection('kitchen')" style="display: none;">Kitchen</button>
+                    <button class="btn btn-secondary" id="nav-billing" onclick="showSection('billing')" style="display: none;">Billing</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Order Section (Waiter/Admin View) -->
+        <section id="order" class="section active">
+            <div class="card">
+                <h2 style="margin-bottom: 24px;">Create New Order</h2>
+                
+                <div class="form-group">
+                    <label class="form-label">Table Number</label>
+                    <input type="number" class="form-control" id="tableNumber" placeholder="Enter table number">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Customer Name (Optional)</label>
+                    <input type="text" class="form-control" id="customerName" placeholder="Enter customer name">
+                </div>
+                
+                <input type="text" class="search-bar" id="menuSearch" placeholder="Search menu items..." onkeyup="filterMenu()">
+                
+                <div class="category-tabs" id="categoryTabs">
+                    <div class="category-tab active" onclick="filterByCategory('all')">All</div>
+                </div>
+                
+                <div class="menu-grid" id="menuGrid">
+                    <!-- Menu items will be dynamically added -->
+                </div>
+                
+                <button class="btn btn-primary" style="width: 100%;" onclick="submitOrder()">Submit Order</button>
+            </div>
+            
+            <!-- Active Orders -->
+            <div class="card" style="margin-top: 30px;">
+                <h3 style="margin-bottom: 20px;">Active Orders</h3>
+                <div id="activeOrders"></div>
+            </div>
+        </section>
+
+        <!-- Kitchen Section (Chef View) -->
+        <section id="kitchen" class="section">
+            <h2 style="margin-bottom: 24px;">Kitchen Orders</h2>
+            
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Pending Orders</div>
+                    <div class="stat-value" id="pendingOrders">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Avg. Prep Time</div>
+                    <div class="stat-value" id="avgPrepTime">15m</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Orders Delayed</div>
+                    <div class="stat-value" style="color: #ffb400;" id="delayedOrders">0</div>
+                </div>
+            </div>
+            
+            <div id="kitchenOrders"></div>
+        </section>
+
+        <!-- Billing Section (Biller View) -->
+        <section id="billing" class="section">
+            <h2 style="margin-bottom: 24px;">Billing Management</h2>
+            
+            <div class="card">
+                <h3>Generate Bill by Table</h3>
+                <div class="form-group">
+                    <label class="form-label">Table Number</label>
+                    <input type="number" class="form-control" id="billTableNumber" placeholder="Enter table number">
+                </div>
+                <button class="btn btn-primary" onclick="generateTableBill()">Generate Bill</button>
+            </div>
+            
+            <div id="tableBillContainer"></div>
+        </section>
+
+        <!-- Insights Section -->
+        <section id="insights" class="section">
+            <h2 style="margin-bottom: 24px;">City-Level Insights</h2>
+            
+            <div class="time-filter">
+                <button class="time-btn active" onclick="setTimeFilter('daily')">Daily</button>
+                <button class="time-btn" onclick="setTimeFilter('weekly')">Weekly</button>
+                <button class="time-btn" onclick="setTimeFilter('monthly')">Monthly</button>
+            </div>
+            
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Top Selling Item</div>
+                    <div class="stat-value" id="topItem">Chicken Biryani</div>
+                    <div class="stat-change">
+                        <span>↑</span>
+                        <span>324 orders</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">Average Order Value</div>
+                    <div class="stat-value" id="avgOrder">₹385</div>
+                    <div class="stat-change">
+                        <span>↑</span>
+                        <span>+12% from last period</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">Trending Category</div>
+                    <div class="stat-value" id="trendingCat">Chinese</div>
+                    <div class="stat-change">
+                        <span>↑</span>
+                        <span>45% growth rate</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">Peak Hour</div>
+                    <div class="stat-value" id="peakHour">8 PM</div>
+                    <div class="stat-change">
+                        <span>→</span>
+                        <span>No change</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>Hourly Order Distribution</h3>
+                <div class="chart-container">
+                    <canvas id="timeChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>Smart Recommendations</h3>
+                
+                <div style="background: #f7f7f7; padding: 20px; border-radius: 8px; margin-top: 16px;">
+                    <h4 style="color: #ff5a5f; margin-bottom: 12px;">🔥 High-Profit Combo Opportunity</h4>
+                    <p>Based on order patterns, creating a <strong>Chicken Tikka + Naan + Lassi</strong> combo could increase average order value by 23%</p>
+                    <p style="margin-top: 8px; color: #717171;">Suggested price: ₹449 (15% discount on individual items)</p>
+                </div>
+                
+                <div style="background: #f7f7f7; padding: 20px; border-radius: 8px; margin-top: 16px;">
+                    <h4 style="color: #ff5a5f; margin-bottom: 12px;">📈 Upsell Opportunity</h4>
+                    <p>68% of customers ordering <strong>Biryani</strong> also order beverages. Train staff to suggest drinks with biryani orders.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section id="analytics" class="section">
+            <h2 style="margin-bottom: 24px;">Business Analytics</h2>
+            
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Today's Revenue</div>
+                    <div class="stat-value" id="todayRevenue">₹24,580</div>
+                    <div class="stat-change">
+                        <span>↑</span>
+                        <span>+18% vs yesterday</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">Orders Today</div>
+                    <div class="stat-value" id="todayOrders">67</div>
+                    <div class="stat-change">
+                        <span>→</span>
+                        <span>Target: 80</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label">Table Turnover</div>
+                    <div class="stat-value">3.2x</div>
+                    <div class="stat-change">
+                        <span>↑</span>
+                        <span>Industry avg: 2.8x</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3>Item Performance</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Category</th>
+                            <th>Orders</th>
+                            <th>Revenue</th>
+                            <th>Margin</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="performanceTable">
+                        <!-- Will be populated dynamically -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Enhanced menu data with categories
+        const menuItems = [
+            { id: 1, name: 'Chicken Biryani', price: 280, category: 'Main Course' },
+            { id: 2, name: 'Paneer Tikka', price: 220, category: 'Starters' },
+            { id: 3, name: 'Naan', price: 45, category: 'Breads' },
+            { id: 4, name: 'Dal Makhani', price: 180, category: 'Main Course' },
+            { id: 5, name: 'Chicken Tikka', price: 250, category: 'Starters' },
+            { id: 6, name: 'Lassi', price: 60, category: 'Beverages' },
+            { id: 7, name: 'Fried Rice', price: 200, category: 'Chinese' },
+            { id: 8, name: 'Manchurian', price: 180, category: 'Chinese' },
+            { id: 9, name: 'Ice Cream', price: 80, category: 'Desserts' },
+            { id: 10, name: 'Gulab Jamun', price: 60, category: 'Desserts' },
+            { id: 11, name: 'Masala Dosa', price: 120, category: 'South Indian' },
+            { id: 12, name: 'Chole Bhature', price: 150, category: 'Main Course' },
+            { id: 13, name: 'Spring Roll', price: 140, category: 'Chinese' },
+            { id: 14, name: 'Mojito', price: 90, category: 'Beverages' },
+            { id: 15, name: 'Pizza Margherita', price: 250, category: 'Italian' }
+        ];
+
+        // State management
+        let currentRole = 'admin';
+        let currentOrder = {};
+        let orders = JSON.parse(localStorage.getItem('restaurantOrders')) || [];
+        let currentCategory = 'all';
+        let timeFilter = 'daily';
+
+        // Initialize
+        function init() {
+            renderCategories();
+            renderMenu();
+            updateDashboard();
+            drawCharts();
+            setRole('admin');
+        }
+
+        // Role management
+        function setRole(role) {
+            currentRole = role;
+            
+            // Update role buttons
+            document.querySelectorAll('.role-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent.toLowerCase() === role);
+            });
+            
+            // Show/hide navigation items based on role
+            const navVisibility = {
+                admin: ['order', 'insights', 'analytics'],
+                waiter: ['order'],
+                chef: ['kitchen'],
+                biller: ['billing']
+            };
+            
+            ['order', 'insights', 'analytics', 'kitchen', 'billing'].forEach(section => {
+                const navBtn = document.getElementById(`nav-${section}`);
+                navBtn.style.display = navVisibility[role].includes(section) ? 'block' : 'none';
+            });
+            
+            // Show appropriate section
+            const defaultSection = { chef: 'kitchen', biller: 'billing', waiter: 'order', admin: 'order' };
+            showSection(defaultSection[role]);
+            
+            if (role === 'chef') updateKitchenView();
+        }
+
+        // Render categories
+        function renderCategories() {
+            const categories = [...new Set(menuItems.map(item => item.category))];
+            const categoryTabs = document.getElementById('categoryTabs');
+            
+            categoryTabs.innerHTML = `
+                <div class="category-tab active" onclick="filterByCategory('all')">All</div>
+                ${categories.map(cat => `
+                    <div class="category-tab" onclick="filterByCategory('${cat}')">${cat}</div>
+                `).join('')}
+            `;
+        }
+
+        // Filter by category
+        function filterByCategory(category) {
+            currentCategory = category;
+            
+            // Update active tab
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.textContent === category || (category === 'all' && tab.textContent === 'All')) {
+                    tab.classList.add('active');
+                }
+            });
+            
+            renderMenu();
+        }
+
+        // Render menu items
+        function renderMenu() {
+            const menuGrid = document.getElementById('menuGrid');
+            const searchTerm = document.getElementById('menuSearch').value.toLowerCase();
+            
+            const filteredItems = menuItems.filter(item => {
+                const matchesCategory = currentCategory === 'all' || item.category === currentCategory;
+                const matchesSearch = item.name.toLowerCase().includes(searchTerm);
+                return matchesCategory && matchesSearch;
+            });
+            
+            menuGrid.innerHTML = filteredItems.map(item => {
+                const quantity = currentOrder[item.id] || 0;
+                return `
+                    <div class="menu-item ${quantity > 0 ? 'selected' : ''}">
+                        <h4>${item.name}</h4>
+                        <p style="color: #717171; font-size: 14px;">${item.category}</p>
+                        <p style="color: var(--primary-color); font-weight: 600;">₹${item.price}</p>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">−</button>
+                            <span style="min-width: 30px; text-align: center;">${quantity}</span>
+                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Filter menu
+        function filterMenu() {
+            renderMenu();
+        }
+
+        // Update quantity
+        function updateQuantity(itemId, change) {
+            const currentQty = currentOrder[itemId] || 0;
+            const newQty = Math.max(0, currentQty + change);
+            
+            if (newQty === 0) {
+                delete currentOrder[itemId];
+            } else {
+                currentOrder[itemId] = newQty;
+            }
+            
+            renderMenu();
+        }
+
+        // Submit order
+        function submitOrder() {
+            const tableNumber = document.getElementById('tableNumber').value;
+            if (!tableNumber) {
+                alert('Please enter table number');
+                return;
+            }
+            
+            if (Object.keys(currentOrder).length === 0) {
+                alert('Please select items');
+                return;
+            }
+            
+            const order = {
+                id: Date.now(),
+                tableNumber: parseInt(tableNumber),
+                customerName: document.getElementById('customerName').value || `Table ${tableNumber}`,
+                items: Object.entries(currentOrder).map(([itemId, quantity]) => {
+                    const item = menuItems.find(i => i.id === parseInt(itemId));
+                    return { ...item, quantity };
+                }),
+                status: 'pending',
+                timestamp: new Date().toISOString(),
+                prepStartTime: null,
+                completedTime: null
+            };
+            
+            orders.push(order);
+            localStorage.setItem('restaurantOrders', JSON.stringify(orders));
+            
+            alert('Order submitted successfully!');
+            
+            // Reset form
+            currentOrder = {};
+            document.getElementById('tableNumber').value = '';
+            document.getElementById('customerName').value = '';
+            renderMenu();
+            updateActiveOrders();
+            updateDashboard();
+            
+            // Update kitchen view if chef is logged in
+            if (currentRole === 'chef') {
+                updateKitchenView();
+            }
+        }
+
+        // Update active orders
+        function updateActiveOrders() {
+            const activeOrdersDiv = document.getElementById('activeOrders');
+            const activeOrders = orders.filter(o => o.status !== 'completed' && o.status !== 'billed');
+            
+            if (activeOrders.length === 0) {
+                activeOrdersDiv.innerHTML = '<p style="color: #717171;">No active orders</p>';
+                return;
+            }
+            
+            activeOrdersDiv.innerHTML = activeOrders.map(order => {
+                const timeDiff = new Date() - new Date(order.timestamp);
+                const minutes = Math.floor(timeDiff / 60000);
+                const isDelayed = minutes > 20;
+                const isUrgent = minutes > 30;
+                const total = order.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                
+                return `
+                    <div class="order-card ${isDelayed ? 'delayed' : ''} ${isUrgent ? 'urgent' : ''}">
+                        <div class="order-header">
+                            <div>
+                                <h4>Table ${order.tableNumber} - ${order.customerName}</h4>
+                                <p style="color: #717171; font-size: 14px;">${minutes} minutes ago</p>
+                            </div>
+                            <div class="order-status status-${order.status || 'pending'}">${order.status || 'pending'}</div>
+                        </div>
+                        <div style="margin-top: 12px;">
+                            ${order.items.map(item => `<p>${item.name} x ${item.quantity}</p>`).join('')}
+                        </div>
+                        <p style="margin-top: 12px; font-weight: 600;">Total: ₹${total}</p>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Kitchen view functions
+        function updateKitchenView() {
+            const kitchenOrdersDiv = document.getElementById('kitchenOrders');
+            const pendingOrders = orders.filter(o => o.status === 'pending' || o.status === 'preparing');
+            
+            // Update stats
+            document.getElementById('pendingOrders').textContent = pendingOrders.length;
+            
+            // Count delayed orders
+            const delayedCount = pendingOrders.filter(order => {
+                const timeDiff = new Date() - new Date(order.timestamp);
+                return Math.floor(timeDiff / 60000) > 20;
+            }).length;
+            document.getElementById('delayedOrders').textContent = delayedCount;
+            
+            // Group items by type for chef view
+            const itemGroups = {};
+            pendingOrders.forEach(order => {
+                order.items.forEach(item => {
+                    if (!itemGroups[item.name]) {
+                        itemGroups[item.name] = {
+                            name: item.name,
+                            category: item.category,
+                            totalQuantity: 0,
+                            orders: []
+                        };
+                    }
+                    itemGroups[item.name].totalQuantity += item.quantity;
+                    itemGroups[item.name].orders.push({
+                        tableNumber: order.tableNumber,
+                        quantity: item.quantity,
+                        orderId: order.id,
+                        timestamp: order.timestamp
+                    });
+                });
+            });
+            
+            kitchenOrdersDiv.innerHTML = `
+                <div class="card">
+                    <h3>Items to Prepare</h3>
+                    ${Object.values(itemGroups).map(group => `
+                        <div style="background: #f7f7f7; padding: 16px; border-radius: 8px; margin-top: 12px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <h4>${group.name}</h4>
+                                    <p style="color: #717171; font-size: 14px;">${group.category}</p>
+                                </div>
+                                <div style="font-size: 24px; font-weight: 600; color: #ff5a5f;">
+                                    ${group.totalQuantity}
+                                </div>
+                            </div>
+                            <div style="margin-top: 12px;">
+                                ${group.orders.map(order => {
+                                    const timeDiff = new Date() - new Date(order.timestamp);
+                                    const minutes = Math.floor(timeDiff / 60000);
+                                    const isDelayed = minutes > 20;
+                                    return `
+                                        <p style="color: ${isDelayed ? '#ffb400' : '#484848'};">
+                                            Table ${order.tableNumber}: ${order.quantity} qty 
+                                            <span style="font-size: 12px;">(${minutes}m ago)</span>
+                                            ${isDelayed ? '⚠️' : ''}
+                                        </p>
+                                    `;
+                                }).join('')}
+                            </div>
+                            <button class="btn btn-primary" style="margin-top: 12px;" onclick="markItemReady('${group.name}')">
+                                Mark as Ready
+                            </button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            // Auto-refresh kitchen view
+            if (currentRole === 'chef') {
+                setTimeout(updateKitchenView, 30000); // Refresh every 30 seconds
+            }
+        }
+
+        // Mark item as ready
+        function markItemReady(itemName) {
+            // Update order status logic here
+            alert(`${itemName} marked as ready!`);
+            updateKitchenView();
+        }
+
+        // Billing functions
+        function generateTableBill() {
+            const tableNumber = parseInt(document.getElementById('billTableNumber').value);
+            if (!tableNumber) {
+                alert('Please enter table number');
+                return;
+            }
+            
+            // Get all orders for this table
+            const tableOrders = orders.filter(o => o.tableNumber === tableNumber && o.status !== 'billed');
+            
+            if (tableOrders.length === 0) {
+                alert('No pending orders for this table');
+                return;
+            }
+            
+            // Calculate total bill
+            let totalAmount = 0;
+            const allItems = {};
+            
+            tableOrders.forEach(order => {
+                order.items.forEach(item => {
+                    if (!allItems[item.name]) {
+                        allItems[item.name] = {
+                            name: item.name,
+                            price: item.price,
+                            quantity: 0
+                        };
+                    }
+                    allItems[item.name].quantity += item.quantity;
+                    totalAmount += item.price * item.quantity;
+                });
+            });
+            
+            // Display bill
+            const billContainer = document.getElementById('tableBillContainer');
+            billContainer.innerHTML = `
+                <div class="card" style="margin-top: 20px;">
+                    <h3>Bill for Table ${tableNumber}</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${Object.values(allItems).map(item => `
+                                <tr>
+                                    <td>${item.name}</td>
+                                    <td>${item.quantity}</td>
+                                    <td>₹${item.price}</td>
+                                    <td>₹${item.price * item.quantity}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                    <div style="text-align: right; margin-top: 20px;">
+                        <p style="font-size: 14px; color: #717171;">Subtotal: ₹${totalAmount}</p>
+                        <p style="font-size: 14px; color: #717171;">GST (5%): ₹${Math.round(totalAmount * 0.05)}</p>
+                        <h3 style="color: #ff5a5f; margin-top: 8px;">Total: ₹${Math.round(totalAmount * 1.05)}</h3>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="confirmBilling(${tableNumber})">
+                        Confirm Payment
+                    </button>
+                </div>
+            `;
+        }
+
+        // Confirm billing
+        function confirmBilling(tableNumber) {
+            orders.forEach(order => {
+                if (order.tableNumber === tableNumber && order.status !== 'billed') {
+                    order.status = 'billed';
+                }
+            });
+            
+            localStorage.setItem('restaurantOrders', JSON.stringify(orders));
+            alert('Payment confirmed!');
+            document.getElementById('billTableNumber').value = '';
+            document.getElementById('tableBillContainer').innerHTML = '';
+        }
+
+        // Show section with nav highlighting
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName).classList.add('active');
+            
+            // Update nav buttons
+            document.querySelectorAll('.nav-buttons .btn-secondary').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Highlight active nav button
+            const navMap = {
+                'order': 'nav-order',
+                'insights': 'nav-insights',
+                'analytics': 'nav-analytics',
+                'kitchen': 'nav-kitchen',
+                'billing': 'nav-billing'
+            };
+            
+            if (navMap[sectionName]) {
+                document.getElementById(navMap[sectionName]).classList.add('active');
+            }
+            
+            // Update specific views
+            if (sectionName === 'analytics') {
+                updateAnalytics();
+            } else if (sectionName === 'kitchen') {
+                updateKitchenView();
+            } else if (sectionName === 'order') {
+                updateActiveOrders();
+            }
+        }
+
+        // Time filter
+        function setTimeFilter(filter) {
+            timeFilter = filter;
+            
+            // Update buttons
+            document.querySelectorAll('.time-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase() === filter) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            updateDashboard();
+            drawCharts();
+        }
+
+        // Update dashboard
+        function updateDashboard() {
+            if (orders.length === 0) return;
+            
+            // Filter orders based on time filter
+            const now = new Date();
+            let filteredOrders = orders;
+            
+            if (timeFilter === 'daily') {
+                filteredOrders = orders.filter(o => {
+                    const orderDate = new Date(o.timestamp);
+                    return orderDate.toDateString() === now.toDateString();
+                });
+            } else if (timeFilter === 'weekly') {
+                const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                filteredOrders = orders.filter(o => new Date(o.timestamp) >= weekAgo);
+            } else if (timeFilter === 'monthly') {
+                const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+                filteredOrders = orders.filter(o => new Date(o.timestamp) >= monthAgo);
+            }
+            
+            // Calculate insights
+            if (filteredOrders.length > 0) {
+                // Top selling item
+                const itemCounts = {};
+                filteredOrders.forEach(order => {
+                    order.items.forEach(item => {
+                        itemCounts[item.name] = (itemCounts[item.name] || 0) + item.quantity;
+                    });
+                });
+                
+                const topItem = Object.entries(itemCounts).sort((a, b) => b[1] - a[1])[0];
+                if (topItem) {
+                    document.getElementById('topItem').textContent = topItem[0];
+                    document.querySelector('#topItem').nextElementSibling.innerHTML = `<span>↑</span><span>${topItem[1]} orders</span>`;
+                }
+                
+                // Average order value
+                const avgValue = filteredOrders.reduce((sum, order) => {
+                    return sum + order.items.reduce((orderSum, item) => orderSum + (item.price * item.quantity), 0);
+                }, 0) / filteredOrders.length;
+                document.getElementById('avgOrder').textContent = `₹${Math.round(avgValue)}`;
+                
+                // Trending category
+                const categoryCounts = {};
+                filteredOrders.forEach(order => {
+                    order.items.forEach(item => {
+                        categoryCounts[item.category] = (categoryCounts[item.category] || 0) + item.quantity;
+                    });
+                });
+                
+                const trendingCategory = Object.entries(categoryCounts).sort((a, b) => b[1] - a[1])[0];
+                if (trendingCategory) {
+                    document.getElementById('trendingCat').textContent = trendingCategory[0];
+                }
+                
+                // Today's metrics
+                const todayOrders = orders.filter(o => 
+                    new Date(o.timestamp).toDateString() === now.toDateString()
+                );
+                
+                const todayRevenue = todayOrders.reduce((sum, order) => {
+                    return sum + order.items.reduce((orderSum, item) => orderSum + (item.price * item.quantity), 0);
+                }, 0);
+                
+                document.getElementById('todayRevenue').textContent = `₹${todayRevenue.toLocaleString()}`;
+                document.getElementById('todayOrders').textContent = todayOrders.length;
+            }
+        }
+
+        // Update analytics
+        function updateAnalytics() {
+            const performanceTable = document.getElementById('performanceTable');
+            
+            // Calculate item performance
+            const itemStats = {};
+            orders.forEach(order => {
+                order.items.forEach(item => {
+                    if (!itemStats[item.name]) {
+                        itemStats[item.name] = {
+                            name: item.name,
+                            category: item.category,
+                            price: item.price,
+                            orders: 0,
+                            revenue: 0
+                        };
+                    }
+                    itemStats[item.name].orders += item.quantity;
+                    itemStats[item.name].revenue += item.price * item.quantity;
+                });
+            });
+            
+            // Render performance table
+            performanceTable.innerHTML = Object.values(itemStats)
+                .sort((a, b) => b.revenue - a.revenue)
+                .map(item => {
+                    const margin = 60; // Assuming 60% margin
+                    const performance = item.orders > 50 ? 'success' : item.orders > 20 ? 'warning' : 'danger';
+                    
+                    return `
+                        <tr>
+                            <td>${item.name}</td>
+                            <td>${item.category}</td>
+                            <td>${item.orders}</td>
+                            <td>₹${item.revenue.toLocaleString()}</td>
+                            <td>${margin}%</td>
+                            <td><span class="badge ${performance}">${performance === 'success' ? 'High' : performance === 'warning' ? 'Medium' : 'Low'}</span></td>
+                        </tr>
+                    `;
+                }).join('');
+        }
+
+        // Chart functions
+        function drawCharts() {
+            const canvas = document.getElementById('timeChart');
+            const ctx = canvas.getContext('2d');
+            
+            // Clear canvas
+            canvas.width = canvas.parentElement.offsetWidth - 40;
+            canvas.height = 260;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Sample data for hourly distribution
+            const hours = ['10AM', '11AM', '12PM', '1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM', '8PM', '9PM', '10PM'];
+            const values = [15, 20, 45, 55, 30, 25, 35, 40, 60, 75, 85, 65, 45];
+            
+            const barWidth = (canvas.width / hours.length) * 0.6;
+            const maxValue = Math.max(...values);
+            const minValue = Math.min(...values);
+            const peakIndex = values.indexOf(maxValue);
+            const lowestIndex = values.indexOf(minValue);
+            
+            values.forEach((value, index) => {
+                const barHeight = (value / maxValue) * 200;
+                const x = index * (canvas.width / hours.length) + (canvas.width / hours.length - barWidth) / 2;
+                const y = canvas.height - barHeight - 40;
+                
+                // Color based on value
+                if (index === peakIndex) {
+                    ctx.fillStyle = '#ff5a5f'; // Peak hour in red
+                } else if (index === lowestIndex) {
+                    ctx.fillStyle = '#fbbf24'; // Lowest hour in yellow
+                } else {
+                    ctx.fillStyle = '#e5e5e5'; // Normal hours in light gray
+                }
+                
+                ctx.fillRect(x, y, barWidth, barHeight);
+                
+                // Labels
+                ctx.fillStyle = '#717171';
+                ctx.font = '11px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(hours[index], x + barWidth / 2, canvas.height - 25);
+                ctx.fillText(value, x + barWidth / 2, y - 5);
+            });
+            
+            // Update peak hour display
+            document.getElementById('peakHour').textContent = hours[peakIndex];
+        }
+
+        // Initialize on load
+        window.onload = init;
+
+        // Handle window resize
+        window.onresize = function() {
+            if (document.getElementById('insights').classList.contains('active')) {
+                drawCharts();
+            }
+        };
+
+        // Auto-refresh active orders
+        setInterval(() => {
+            if (currentRole === 'waiter' || currentRole === 'admin') {
+                updateActiveOrders();
+            }
+        }, 30000);
+    </script>
+</body>
+</html>
