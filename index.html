@@ -760,7 +760,7 @@
             
             // Show/hide navigation items based on role
             const navVisibility = {
-                admin: ['order', 'insights', 'analytics'],
+                admin: ['insights', 'analytics'],
                 waiter: ['order'],
                 chef: ['kitchen'],
                 biller: ['billing']
@@ -772,7 +772,7 @@
             });
             
             // Show appropriate section
-            const defaultSection = { chef: 'kitchen', biller: 'billing', waiter: 'order', admin: 'order' };
+            const defaultSection = { chef: 'kitchen', biller: 'billing', waiter: 'order', admin: 'insights' };
             showSection(defaultSection[role]);
             
             if (role === 'chef') updateKitchenView();
