@@ -1499,37 +1499,23 @@
             
             // Animate button
             const btn = event.target;
-            const originalContent = btn.innerHTML;
             btn.innerHTML = '<span class="loading-spinner"></span> Placing order...';
             btn.disabled = true;
             
             // Simulate API call
             setTimeout(() => {
-                // Generate order number
-                const orderNum = Math.floor(Math.random() * 9000) + 1000;
+                // Success animation
+                btn.innerHTML = '✓ Order Placed!';
+                btn.style.background = 'var(--success)';
                 
-                // Close cart modal
-                closeCart();
-                
-                // Show success overlay
-                document.getElementById('orderNumber').textContent = orderNum;
-                document.getElementById('orderSuccess').style.display = 'block';
-                
-                // Reset cart
-                cart = {};
-                updateCartUI();
-                renderMenu();
-                
-                // Hide success after 3 seconds
                 setTimeout(() => {
-                    document.getElementById('orderSuccess').style.display = 'none';
-                }, 3000);
-                
-                // Reset button
-                btn.innerHTML = originalContent;
-                btn.disabled = false;
-            }, 1500);
-        }
+                    // Reset everything
+                    cart = {};
+                    updateCartUI();
+                    closeCart();
+                    renderMenu();
+                    
+                    // Show success message
                     alert('🎉 Order placed successfully! Your delicious food will be ready soon.');
                 }, 1500);
             }, 1500);
