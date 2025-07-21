@@ -1,3 +1,10 @@
+# Complete User Ordering App - Source Code
+
+## Full HTML/CSS/JavaScript Code
+
+Copy the entire code below and save it as `index.html`:
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,12 +48,10 @@
             padding-bottom: 100px;
         }
 
-        /* Smooth scrolling */
         html {
             scroll-behavior: smooth;
         }
 
-        /* Header */
         .header {
             background: var(--white);
             padding: 20px;
@@ -91,7 +96,6 @@
             50% { transform: scale(1.05); }
         }
 
-        /* Hero Section */
         .hero {
             padding: 30px 20px;
             text-align: center;
@@ -121,7 +125,6 @@
             animation: fadeInUp 0.6s ease 0.1s both;
         }
 
-        /* Magic Button - Inspired by Duolingo */
         .magic-button {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: white;
@@ -161,7 +164,6 @@
             box-shadow: 0 12px 40px rgba(107, 70, 193, 0.4);
         }
 
-        /* Search Section - Inspired by Blinkit */
         .search-section {
             padding: 0 20px 20px;
             max-width: 600px;
@@ -197,7 +199,6 @@
             color: var(--gray);
         }
 
-        /* Categories - Inspired by Headspace */
         .categories {
             padding: 0 20px 20px;
             max-width: 600px;
@@ -242,14 +243,12 @@
             border-color: var(--primary);
         }
 
-        /* Menu Section */
         .menu-container {
             padding: 0 20px;
             max-width: 600px;
             margin: 0 auto;
         }
 
-        /* Menu Cards - Inspired by Figma/FigJam */
         .menu-card {
             background: var(--white);
             border-radius: var(--radius);
@@ -304,7 +303,6 @@
             gap: 8px;
         }
 
-        /* Veg/Non-veg Indicators - Inspired by Bumble's badges */
         .diet-badge {
             display: inline-flex;
             align-items: center;
@@ -365,7 +363,6 @@
             color: var(--primary);
         }
 
-        /* Add Button - Inspired by Duolingo's progress buttons */
         .add-button {
             background: var(--primary);
             color: white;
@@ -387,7 +384,6 @@
             transform: scale(0.95);
         }
 
-        /* Quantity Controller - Inspired by Blinkit */
         .quantity-controller {
             display: flex;
             align-items: center;
@@ -431,7 +427,6 @@
             text-align: center;
         }
 
-        /* Floating Cart - Inspired by Headspace's meditation timer */
         .floating-cart {
             position: fixed;
             bottom: 24px;
@@ -468,7 +463,6 @@
             font-weight: 700;
         }
 
-        /* Modal - Inspired by Figma's overlays */
         .modal {
             position: fixed;
             top: 0;
@@ -527,7 +521,6 @@
             max-height: 60vh;
         }
 
-        /* Choice Cards - Inspired by Bumble's preference cards */
         .choice-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -590,7 +583,6 @@
             color: var(--gray);
         }
 
-        /* Recommendation Cards */
         .recommendation-card {
             background: var(--bg-light);
             border: 2px solid var(--gray-light);
@@ -649,7 +641,6 @@
             color: white;
         }
 
-        /* Loading Animation */
         .loading-spinner {
             display: inline-block;
             width: 20px;
@@ -664,7 +655,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Back Button */
         .back-button {
             position: absolute;
             top: 24px;
@@ -689,7 +679,6 @@
             transform: scale(1.1);
         }
 
-        /* Skip Button */
         .skip-button {
             position: absolute;
             top: 24px;
@@ -709,7 +698,6 @@
             color: var(--gray-dark);
         }
 
-        /* Enhanced Add Button with Counter */
         .add-button-group {
             position: relative;
             display: inline-block;
@@ -738,7 +726,6 @@
             100% { transform: scale(1); }
         }
 
-        /* Toast Notification */
         .toast {
             position: fixed;
             bottom: 120px;
@@ -762,7 +749,6 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
@@ -775,7 +761,6 @@
             opacity: 0.5;
         }
 
-        /* Order Success Animation */
         .order-success {
             position: fixed;
             top: 50%;
@@ -802,7 +787,6 @@
             animation: successPulse 1s ease infinite;
         }
 
-        /* Recommendation counter badge */
         .recommendation-selected {
             position: absolute;
             top: 12px;
@@ -817,6 +801,36 @@
             justify-content: center;
             font-weight: 700;
             box-shadow: 0 2px 8px rgba(107, 70, 193, 0.3);
+        }
+
+        @media (max-width: 480px) {
+            .greeting {
+                font-size: 28px;
+            }
+            
+            .modal-content {
+                border-radius: var(--radius) var(--radius) 0 0;
+            }
+        }
+
+        .shake {
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .success-pulse {
+            animation: successPulse 0.6s ease;
+        }
+
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
@@ -955,6 +969,25 @@
         </div>
     </div>
 
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Your Order 🛒</h2>
+                <p class="modal-subtitle">Everything looks delicious!</p>
+            </div>
+            <div class="modal-body" id="cartBody">
+                <!-- Cart items will be rendered here -->
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn secondary" onclick="closeCart()">Add More</button>
+                <button class="modal-btn primary" onclick="placeOrder()">
+                    Place Order • <span id="finalTotal">₹0</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast Notification -->
     <div id="toast" class="toast">
         <span id="toastIcon">✓</span>
@@ -1064,14 +1097,43 @@
         let personalizationData = {
             diet: null,
             mood: null,
-            selected: []
+            selected: [],
+            currentStep: 1
         };
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             renderMenu();
             updateCartUI();
+            
+            // Add enter key support for search
+            const searchInput = document.querySelector('.search-input');
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    searchMenu();
+                }
+            });
         });
+
+        // Handle escape key for modals
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (document.getElementById('personalizationModal').classList.contains('active')) {
+                    closePersonalization();
+                } else if (document.getElementById('cartModal').classList.contains('active')) {
+                    closeCart();
+                }
+            }
+        });
+
+        // Prevent body scroll when modal is open
+        function preventBodyScroll(prevent) {
+            if (prevent) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
 
         // Render menu with beautiful cards
         function renderMenu(items = menuData) {
@@ -1140,7 +1202,8 @@
 
         // Search functionality
         function searchMenu() {
-            const searchTerm = event.target.value.toLowerCase();
+            const searchInput = document.querySelector('.search-input');
+            const searchTerm = searchInput.value.toLowerCase();
             const filtered = menuData.filter(item => 
                 item.name.toLowerCase().includes(searchTerm) ||
                 item.description.toLowerCase().includes(searchTerm)
@@ -1234,6 +1297,7 @@
             document.getElementById('personalizationModal').classList.add('active');
             showStep(1);
             personalizationData = { diet: null, mood: null, selected: [] };
+            preventBodyScroll(true);
         }
 
         function selectDiet(diet) {
@@ -1404,16 +1468,19 @@
 
         function closePersonalization() {
             document.getElementById('personalizationModal').classList.remove('active');
+            preventBodyScroll(false);
         }
 
         // Cart modal
         function openCart() {
             document.getElementById('cartModal').classList.add('active');
             renderCart();
+            preventBodyScroll(true);
         }
 
         function closeCart() {
             document.getElementById('cartModal').classList.remove('active');
+            preventBodyScroll(false);
         }
 
         function renderCart() {
@@ -1499,27 +1566,71 @@
             
             // Animate button
             const btn = event.target;
+            const originalContent = btn.innerHTML;
             btn.innerHTML = '<span class="loading-spinner"></span> Placing order...';
             btn.disabled = true;
             
             // Simulate API call
             setTimeout(() => {
-                // Success animation
-                btn.innerHTML = '✓ Order Placed!';
-                btn.style.background = 'var(--success)';
+                // Generate order number
+                const orderNum = Math.floor(Math.random() * 9000) + 1000;
                 
+                // Close cart modal
+                closeCart();
+                
+                // Show success overlay
+                document.getElementById('orderNumber').textContent = orderNum;
+                document.getElementById('orderSuccess').style.display = 'block';
+                
+                // Reset cart
+                cart = {};
+                updateCartUI();
+                renderMenu();
+                
+                // Hide success after 3 seconds
                 setTimeout(() => {
-                    // Reset everything
-                    cart = {};
-                    updateCartUI();
-                    closeCart();
-                    renderMenu();
-                    
-                    // Show success message
-                    alert('🎉 Order placed successfully! Your delicious food will be ready soon.');
-                }, 1500);
+                    document.getElementById('orderSuccess').style.display = 'none';
+                }, 3000);
+                
+                // Reset button
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
             }, 1500);
         }
     </script>
 </body>
 </html>
+```
+
+## How to Use This Code:
+
+1. **Copy the entire code above**
+2. **Create a new file** called `index.html`
+3. **Paste the code** into the file
+4. **Save the file**
+5. **Open in a web browser** by double-clicking the file
+
+## Features Included:
+
+- Complete responsive design
+- Personalized recommendations
+- Cart management
+- Order placement
+- Toast notifications
+- Smooth animations
+- Category filtering
+- Search functionality
+- Back navigation in personalization
+- Empty states
+- Loading states
+- Success confirmations
+
+## Deployment Options:
+
+- **Local**: Just open the HTML file in a browser
+- **GitHub Pages**: Push to a GitHub repo and enable Pages
+- **Netlify**: Drag and drop the HTML file
+- **Vercel**: Deploy with one click
+- **Any Static Host**: Upload the single HTML file
+
+The entire application is self-contained in this single HTML file with no external dependencies!
