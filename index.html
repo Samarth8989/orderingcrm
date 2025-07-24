@@ -2,1594 +2,236 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crave - Order Your Food</title>
+    <title>Delicious Food Ordering</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        * {
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #fafafa;
+            color: #222;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
-
-        :root {
-            --primary: #6B46C1;
-            --primary-light: #9F7AEA;
-            --primary-dark: #553C9A;
-            --success: #48BB78;
-            --warning: #F6AD55;
-            --danger: #FC8181;
-            --dark: #1A202C;
-            --gray-dark: #4A5568;
-            --gray: #718096;
-            --gray-light: #E2E8F0;
-            --white: #FFFFFF;
-            --bg: #FAF5FF;
-            --bg-light: #FEFCFF;
-            --shadow: 0 4px 24px rgba(107, 70, 193, 0.1);
-            --shadow-sm: 0 2px 12px rgba(107, 70, 193, 0.08);
-            --radius: 20px;
-            --radius-sm: 12px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg);
-            color: var(--dark);
-            line-height: 1.6;
-            overflow-x: hidden;
-            padding-bottom: 100px;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        .header {
-            background: var(--white);
-            padding: 20px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: var(--shadow-sm);
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.95);
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -1px;
-        }
-
-        .table-badge {
-            background: var(--bg);
-            padding: 8px 16px;
-            border-radius: 25px;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--primary);
-            border: 2px solid var(--primary-light);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .hero {
-            padding: 30px 20px;
+        header {
+            background: #2d87f0;
+            color: #fff;
+            padding: 20px 0;
             text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
+            letter-spacing: 1px;
+            font-size: 2rem;
         }
-
-        .greeting {
-            font-size: 32px;
-            font-weight: 800;
-            margin-bottom: 12px;
-            background: linear-gradient(135deg, var(--dark) 0%, var(--gray-dark) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: fadeInUp 0.6s ease;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hero-subtitle {
-            color: var(--gray);
-            font-size: 16px;
-            margin-bottom: 24px;
-            animation: fadeInUp 0.6s ease 0.1s both;
-        }
-
-        .magic-button {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
-            color: white;
-            border: none;
-            padding: 20px 40px;
-            border-radius: 35px;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: 0 8px 32px rgba(107, 70, 193, 0.3);
-            position: relative;
-            overflow: hidden;
-            animation: fadeInUp 0.6s ease 0.2s both;
-        }
-
-        .magic-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .magic-button:active::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .magic-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(107, 70, 193, 0.4);
-        }
-
-        .search-section {
-            padding: 0 20px 20px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .search-container {
-            position: relative;
-            animation: fadeInUp 0.6s ease 0.3s both;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 16px 20px 16px 50px;
-            border: 2px solid var(--gray-light);
-            border-radius: var(--radius);
-            font-size: 16px;
-            transition: var(--transition);
-            background: var(--white);
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(107, 70, 193, 0.1);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray);
-        }
-
-        .categories {
-            padding: 0 20px 20px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .category-scroll {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            padding: 4px;
-            scrollbar-width: none;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .category-scroll::-webkit-scrollbar {
-            display: none;
-        }
-
-        .category-pill {
-            flex-shrink: 0;
-            padding: 12px 24px;
-            background: var(--white);
-            border: 2px solid transparent;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            white-space: nowrap;
-            color: var(--gray-dark);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .category-pill:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        .category-pill.active {
-            background: var(--primary);
-            color: var(--white);
-            border-color: var(--primary);
-        }
-
-        .menu-container {
+        main {
+            max-width: 900px;
+            margin: 30px auto;
             padding: 0 20px;
-            max-width: 600px;
-            margin: 0 auto;
         }
-
-        .menu-card {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 20px;
-            margin-bottom: 16px;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
+        h2 {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 8px;
+            margin-top: 36px;
         }
-
-        .menu-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--primary);
-            transform: scaleY(0);
-            transition: transform 0.3s ease;
-        }
-
-        .menu-card:hover {
-            transform: translateX(4px);
-            box-shadow: var(--shadow);
-        }
-
-        .menu-card:hover::before {
-            transform: scaleY(1);
-        }
-
-        .menu-header {
+        .category-list {
             display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 12px;
-        }
-
-        .menu-title-group {
-            flex: 1;
-        }
-
-        .menu-name {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .diet-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 20px;
-            height: 20px;
-            border-radius: 6px;
-            font-size: 12px;
-        }
-
-        .diet-badge.veg {
-            background: #E6FFED;
-            color: var(--success);
-            border: 1.5px solid var(--success);
-        }
-
-        .diet-badge.nonveg {
-            background: #FFF5F5;
-            color: var(--danger);
-            border: 1.5px solid var(--danger);
-        }
-
-        .menu-description {
-            color: var(--gray);
-            font-size: 14px;
-            line-height: 1.5;
-        }
-
-        .menu-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 16px;
-        }
-
-        .menu-meta {
-            display: flex;
-            gap: 16px;
-            font-size: 13px;
-            color: var(--gray);
-        }
-
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .price-add-group {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .price {
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--primary);
-        }
-
-        .add-button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 25px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .add-button:hover {
-            background: var(--primary-dark);
-            transform: scale(1.05);
-        }
-
-        .add-button:active {
-            transform: scale(0.95);
-        }
-
-        .quantity-controller {
-            display: flex;
-            align-items: center;
-            background: var(--bg);
-            border-radius: 25px;
-            padding: 4px;
             gap: 12px;
+            flex-wrap: wrap;
+            margin: 18px 0;
         }
-
-        .qty-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
+        .category-btn {
+            background: #e3ecfc;
             border: none;
-            background: var(--white);
-            color: var(--primary);
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .qty-btn:hover {
-            background: var(--primary);
-            color: white;
-            transform: scale(1.1);
-        }
-
-        .qty-btn:active {
-            transform: scale(0.9);
-        }
-
-        .qty-number {
-            font-weight: 700;
-            color: var(--dark);
-            min-width: 20px;
-            text-align: center;
-        }
-
-        .floating-cart {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--dark);
-            color: white;
-            padding: 16px 32px;
-            border-radius: 35px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            cursor: pointer;
-            transition: var(--transition);
-            z-index: 1000;
-        }
-
-        .floating-cart:hover {
-            transform: translateX(-50%) translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-        }
-
-        .cart-items-count {
-            background: var(--primary);
-            padding: 4px 12px;
+            color: #2d87f0;
+            padding: 10px 22px;
             border-radius: 20px;
-            font-weight: 700;
-            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
         }
-
-        .cart-total-amount {
-            font-size: 18px;
-            font-weight: 700;
+        .category-btn.active, .category-btn:hover {
+            background: #2d87f0;
+            color: #fff;
         }
-
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            display: none;
-            align-items: flex-end;
-            justify-content: center;
-            z-index: 2000;
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 32px;
         }
-
-        .modal.active {
+        .food-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(60,72,99,0.07);
+            padding: 22px;
             display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
         }
-
-        .modal-content {
-            background: var(--white);
+        .food-card img {
             width: 100%;
-            max-width: 600px;
-            max-height: 90vh;
-            border-radius: var(--radius) var(--radius) 0 0;
-            overflow: hidden;
-            animation: slideUp 0.3s ease;
+            max-height: 130px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            background: #eee;
         }
-
-        @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
-        }
-
-        .modal-header {
-            background: var(--bg);
-            padding: 24px;
-            text-align: center;
-            border-bottom: 1px solid var(--gray-light);
-        }
-
-        .modal-title {
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--dark);
+        .tags {
             margin-bottom: 8px;
         }
-
-        .modal-subtitle {
-            color: var(--gray);
-            font-size: 16px;
-        }
-
-        .modal-body {
-            padding: 24px;
-            overflow-y: auto;
-            max-height: 60vh;
-        }
-
-        .choice-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .choice-card {
-            background: var(--bg-light);
-            border: 3px solid var(--gray-light);
-            border-radius: var(--radius);
-            padding: 24px;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .choice-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow);
-        }
-
-        .choice-card.selected {
-            border-color: var(--primary);
-            background: var(--bg);
-        }
-
-        .choice-card.selected::after {
-            content: '✓';
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            width: 24px;
-            height: 24px;
-            background: var(--primary);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-        }
-
-        .choice-emoji {
-            font-size: 48px;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        .choice-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 4px;
-        }
-
-        .choice-desc {
-            font-size: 13px;
-            color: var(--gray);
-        }
-
-        .recommendation-card {
-            background: var(--bg-light);
-            border: 2px solid var(--gray-light);
-            border-radius: var(--radius-sm);
-            padding: 16px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .recommendation-card:hover {
-            border-color: var(--primary-light);
-            transform: translateX(4px);
-        }
-
-        .recommendation-card.selected {
-            border-color: var(--primary);
-            background: var(--bg);
-        }
-
-        .modal-footer {
-            padding: 24px;
-            background: var(--bg);
-            border-top: 1px solid var(--gray-light);
-            display: flex;
-            gap: 12px;
-        }
-
-        .modal-btn {
-            flex: 1;
-            padding: 16px;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .modal-btn.primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .modal-btn.primary:hover {
-            background: var(--primary-dark);
-        }
-
-        .modal-btn.secondary {
-            background: var(--gray-light);
-            color: var(--gray-dark);
-        }
-
-        .modal-btn.secondary:hover {
-            background: var(--gray);
-            color: white;
-        }
-
-        .loading-spinner {
+        .tag {
             display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid var(--gray-light);
-            border-radius: 50%;
-            border-top-color: var(--primary);
-            animation: spin 1s linear infinite;
+            background: #ecfaf2;
+            color: #188046;
+            border-radius: 8px;
+            font-size: 0.82em;
+            padding: 3px 10px;
+            margin-right: 7px;
+            margin-bottom: 2px;
         }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .desc {
+            margin: 8px 0 10px 0;
+            font-size: 0.95em;
+            color: #555;
         }
-
-        .back-button {
-            position: absolute;
-            top: 24px;
-            left: 24px;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+        .price {
+            font-weight: bold;
+            color: #d67a19;
+            font-size: 1.1em;
+        }
+        .add-btn {
+            align-self: flex-end;
+            background: #188046;
+            color: #fff;
+            padding: 8px 20px;
             border: none;
-            background: var(--gray-light);
-            color: var(--gray-dark);
-            font-size: 20px;
+            border-radius: 16px;
             cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-weight: 500;
+            margin-top: 10px;
+            transition: background 0.2s;
         }
-
-        .back-button:hover {
-            background: var(--gray);
-            color: white;
-            transform: scale(1.1);
+        .add-btn:hover {
+            background: #146838;
         }
-
-        .skip-button {
-            position: absolute;
-            top: 24px;
-            right: 24px;
-            padding: 8px 16px;
-            border-radius: 20px;
-            border: none;
-            background: transparent;
-            color: var(--gray);
-            font-size: 14px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .skip-button:hover {
-            background: var(--gray-light);
-            color: var(--gray-dark);
-        }
-
-        .add-button-group {
-            position: relative;
-            display: inline-block;
-        }
-
-        .add-counter {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: var(--danger);
-            color: white;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: 700;
-            animation: popIn 0.3s ease;
-        }
-
-        @keyframes popIn {
-            0% { transform: scale(0); }
-            80% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 120px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: var(--dark);
-            color: white;
-            padding: 16px 24px;
-            border-radius: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 3000;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--gray);
-        }
-
-        .empty-state-icon {
-            font-size: 64px;
-            margin-bottom: 16px;
-            opacity: 0.5;
-        }
-
-        .order-success {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            background: white;
-            padding: 40px;
-            border-radius: var(--radius);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            text-align: center;
-            z-index: 3000;
-            animation: successBounce 0.6s ease forwards;
-        }
-
-        @keyframes successBounce {
-            0% { transform: translate(-50%, -50%) scale(0); }
-            50% { transform: translate(-50%, -50%) scale(1.1); }
-            100% { transform: translate(-50%, -50%) scale(1); }
-        }
-
-        .success-icon {
-            font-size: 72px;
-            margin-bottom: 20px;
-            animation: successPulse 1s ease infinite;
-        }
-
-        .recommendation-selected {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: var(--primary);
-            color: white;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            box-shadow: 0 2px 8px rgba(107, 70, 193, 0.3);
-        }
-
-        @media (max-width: 480px) {
-            .greeting {
-                font-size: 28px;
-            }
-            
-            .modal-content {
-                border-radius: var(--radius) var(--radius) 0 0;
-            }
-        }
-
-        .shake {
-            animation: shake 0.5s ease;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-
-        .success-pulse {
-            animation: successPulse 0.6s ease;
-        }
-
-        @keyframes successPulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
+        @media (max-width: 600px) {
+            header {font-size: 1.3rem;}
+            .food-grid {grid-template-columns: 1fr;}
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <div class="logo">Crave</div>
-            <div class="table-badge">📍 Table 5</div>
+    <header>
+        Let's find you something delicious
+        <div style="font-size:1rem;font-weight:400;">
+            Customized just for you
         </div>
     </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1 class="greeting">What's your craving?</h1>
-        <p class="hero-subtitle">Let's find you something delicious</p>
-        <button class="magic-button" onclick="startPersonalization()">
-            ✨ Get Smart Recommendations
-        </button>
-    </section>
-
-    <!-- Search Section -->
-    <section class="search-section">
-        <div class="search-container">
-            <span class="search-icon">🔍</span>
-            <input type="text" class="search-input" placeholder="Search for dishes, cuisines..." onkeyup="searchMenu()">
-        </div>
-    </section>
-
-    <!-- Categories -->
-    <section class="categories">
-        <div class="category-scroll">
-            <div class="category-pill active" onclick="filterCategory('all')">🍽️ All</div>
-            <div class="category-pill" onclick="filterCategory('starters')">🥟 Starters</div>
-            <div class="category-pill" onclick="filterCategory('mains')">🍛 Mains</div>
-            <div class="category-pill" onclick="filterCategory('chinese')">🥡 Chinese</div>
-            <div class="category-pill" onclick="filterCategory('drinks')">🥤 Drinks</div>
-            <div class="category-pill" onclick="filterCategory('desserts')">🍰 Desserts</div>
-        </div>
-    </section>
-
-    <!-- Menu -->
-    <section class="menu-container" id="menuContainer">
-        <!-- Menu items will be rendered here -->
-    </section>
-
-    <!-- Floating Cart -->
-    <div class="floating-cart" id="floatingCart" style="display: none;" onclick="openCart()">
-        <span class="cart-items-count" id="cartCount">0</span>
-        <span>View Order</span>
-        <span class="cart-total-amount" id="cartTotal">₹0</span>
-    </div>
-
-    <!-- Personalization Modal -->
-    <div id="personalizationModal" class="modal">
-        <div class="modal-content">
-            <!-- Step 1: Diet Preference -->
-            <div id="step1" class="step">
-                <button class="skip-button" onclick="closePersonalization()">Skip</button>
-                <div class="modal-header">
-                    <h2 class="modal-title">First, tell us your preference 🌿</h2>
-                    <p class="modal-subtitle">We'll customize everything just for you</p>
-                </div>
-                <div class="modal-body">
-                    <div class="choice-grid">
-                        <div class="choice-card" onclick="selectDiet('veg')">
-                            <span class="choice-emoji">🥬</span>
-                            <div class="choice-title">Vegetarian</div>
-                            <div class="choice-desc">Plant-based only</div>
-                        </div>
-                        <div class="choice-card" onclick="selectDiet('nonveg')">
-                            <span class="choice-emoji">🍗</span>
-                            <div class="choice-title">Non-Vegetarian</div>
-                            <div class="choice-desc">Include meat dishes</div>
-                        </div>
-                        <div class="choice-card" onclick="selectDiet('both')">
-                            <span class="choice-emoji">🍱</span>
-                            <div class="choice-title">Everything</div>
-                            <div class="choice-desc">Show me all options</div>
-                        </div>
-                    </div>
-                </div>
+    <main>
+        <nav class="category-list">
+            <button class="category-btn active">Healthy</button>
+            <button class="category-btn">Indian</button>
+            <button class="category-btn">Pizza/Pasta</button>
+            <button class="category-btn">Bowls</button>
+            <button class="category-btn">Burgers</button>
+            <button class="category-btn">Desserts</button>
+            <button class="category-btn">Drinks</button>
+            <button class="category-btn">Snacks</button>
+        </nav>
+        <section class="food-grid">
+            <!-- Healthy Items -->
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=300&q=80" alt="Grilled Salmon">
+                <div class="tags"><span class="tag">Healthy</span></div>
+                <div class="desc">Grilled Salmon with vegetables. Protein rich, low-carb meal.</div>
+                <div class="price">$14.99</div>
+                <button class="add-btn">Add</button>
             </div>
-
-            <!-- Step 2: Mood -->
-            <div id="step2" class="step" style="display: none;">
-                <button class="back-button" onclick="showStep(1)">←</button>
-                <button class="skip-button" onclick="closePersonalization()">Skip</button>
-                <div class="modal-header">
-                    <h2 class="modal-title">How's your appetite? 😋</h2>
-                    <p class="modal-subtitle">We'll match the perfect portions</p>
-                </div>
-                <div class="modal-body">
-                    <div class="choice-grid">
-                        <div class="choice-card" onclick="selectMood('quick')">
-                            <span class="choice-emoji">⚡</span>
-                            <div class="choice-title">Quick Bite</div>
-                            <div class="choice-desc">Ready in 15 mins</div>
-                        </div>
-                        <div class="choice-card" onclick="selectMood('hungry')">
-                            <span class="choice-emoji">🦁</span>
-                            <div class="choice-title">Hungry</div>
-                            <div class="choice-desc">Full meals please</div>
-                        </div>
-                        <div class="choice-card" onclick="selectMood('light')">
-                            <span class="choice-emoji">🥗</span>
-                            <div class="choice-title">Light</div>
-                            <div class="choice-desc">Healthy & fresh</div>
-                        </div>
-                        <div class="choice-card" onclick="selectMood('adventure')">
-                            <span class="choice-emoji">🌶️</span>
-                            <div class="choice-title">Adventurous</div>
-                            <div class="choice-desc">Spicy & bold</div>
-                        </div>
-                    </div>
-                </div>
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1464306076886-debca5e8a6b0?auto=format&fit=crop&w=300&q=80" alt="Avocado Toast">
+                <div class="tags"><span class="tag">Healthy</span><span class="tag">Vegan</span></div>
+                <div class="desc">Multigrain toast, ripe avocado slices, pumpkin seeds.</div>
+                <div class="price">$6.99</div>
+                <button class="add-btn">Add</button>
             </div>
-
-            <!-- Step 3: Recommendations -->
-            <div id="step3" class="step" style="display: none;">
-                <button class="back-button" onclick="showStep(2)">←</button>
-                <div class="modal-header">
-                    <h2 class="modal-title">Perfect matches for you! 🎯</h2>
-                    <p class="modal-subtitle">Tap to select what looks good</p>
-                </div>
-                <div class="modal-body" id="recommendationsBody">
-                    <!-- Recommendations will be rendered here -->
-                </div>
-                <div class="modal-footer">
-                    <button class="modal-btn secondary" onclick="closePersonalization()">Browse Menu</button>
-                    <button class="modal-btn primary" onclick="addRecommendations()">
-                        Add to Order (<span id="selectedCount">0</span>)
-                    </button>
-                </div>
+            <!-- Indian -->
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=300&q=80" alt="Masala Dosa">
+                <div class="tags"><span class="tag">Indian</span><span class="tag">Vegetarian</span></div>
+                <div class="desc">South Indian-style crispy dosa, spicy potato stuffing.</div>
+                <div class="price">$5.99</div>
+                <button class="add-btn">Add</button>
             </div>
-        </div>
-    </div>
-
-    <!-- Cart Modal -->
-    <div id="cartModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Your Order 🛒</h2>
-                <p class="modal-subtitle">Everything looks delicious!</p>
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1523983303491-59e621d71b94?auto=format&fit=crop&w=300&q=80" alt="Butter Chicken">
+                <div class="tags"><span class="tag">Indian</span></div>
+                <div class="desc">Creamy chicken cooked in buttery tomato sauce.</div>
+                <div class="price">$11.99</div>
+                <button class="add-btn">Add</button>
             </div>
-            <div class="modal-body" id="cartBody">
-                <!-- Cart items will be rendered here -->
+            <!-- Pizza/Pasta -->
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1519864600265-abb2419b6cf7?auto=format&fit=crop&w=300&q=80" alt="Margherita Pizza">
+                <div class="tags"><span class="tag">Pizza/Pasta</span></div>
+                <div class="desc">Classic thin crust with fresh mozzarella and basil.</div>
+                <div class="price">$9.99</div>
+                <button class="add-btn">Add</button>
             </div>
-            <div class="modal-footer">
-                <button class="modal-btn secondary" onclick="closeCart()">Add More</button>
-                <button class="modal-btn primary" onclick="placeOrder()">
-                    Place Order • <span id="finalTotal">₹0</span>
-                </button>
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=300&q=80" alt="Veggie Pasta">
+                <div class="tags"><span class="tag">Pizza/Pasta</span><span class="tag">Vegan</span></div>
+                <div class="desc">Wholegrain pasta with sautéed fresh vegetables.</div>
+                <div class="price">$8.99</div>
+                <button class="add-btn">Add</button>
             </div>
-        </div>
-    </div>
-
-    <!-- Toast Notification -->
-    <div id="toast" class="toast">
-        <span id="toastIcon">✓</span>
-        <span id="toastMessage">Added to cart</span>
-    </div>
-
-    <!-- Order Success Overlay -->
-    <div id="orderSuccess" class="order-success" style="display: none;">
-        <div class="success-icon">🎉</div>
-        <h2 style="margin-bottom: 12px;">Order Placed!</h2>
-        <p style="color: var(--gray);">Your delicious food will be ready soon</p>
-        <p style="margin-top: 20px; font-size: 14px;">Order #<strong id="orderNumber"></strong></p>
-    </div>
-
-    <script>
-        // Enhanced menu data
-        const menuData = [
-            {
-                id: 1,
-                name: "Paneer Tikka",
-                description: "Smoky grilled cottage cheese with mint chutney",
-                price: 220,
-                category: "starters",
-                veg: true,
-                prepTime: 15,
-                rating: 4.5,
-                popular: true,
-                spicy: 2
-            },
-            {
-                id: 2,
-                name: "Chicken Wings",
-                description: "Crispy wings tossed in tangy BBQ sauce",
-                price: 280,
-                category: "starters",
-                veg: false,
-                prepTime: 20,
-                rating: 4.7,
-                popular: true,
-                spicy: 2
-            },
-            {
-                id: 3,
-                name: "Veg Biryani",
-                description: "Fragrant basmati rice with garden vegetables",
-                price: 240,
-                category: "mains",
-                veg: true,
-                prepTime: 25,
-                rating: 4.3,
-                popular: false,
-                spicy: 2
-            },
-            {
-                id: 4,
-                name: "Butter Chicken",
-                description: "Creamy tomato gravy with tender chicken",
-                price: 320,
-                category: "mains",
-                veg: false,
-                prepTime: 30,
-                rating: 4.8,
-                popular: true,
-                spicy: 1
-            },
-            {
-                id: 5,
-                name: "Hakka Noodles",
-                description: "Wok-tossed noodles with crunchy vegetables",
-                price: 180,
-                category: "chinese",
-                veg: true,
-                prepTime: 15,
-                rating: 4.2,
-                popular: false,
-                spicy: 1
-            },
-            {
-                id: 6,
-                name: "Fresh Lime Soda",
-                description: "Zesty lime with mint and soda",
-                price: 60,
-                category: "drinks",
-                veg: true,
-                prepTime: 5,
-                rating: 4.4,
-                popular: true,
-                spicy: 0
-            },
-            {
-                id: 7,
-                name: "Chocolate Lava Cake",
-                description: "Warm cake with molten chocolate center",
-                price: 120,
-                category: "desserts",
-                veg: true,
-                prepTime: 10,
-                rating: 4.9,
-                popular: true,
-                spicy: 0
-            }
-        ];
-
-        // State
-        let cart = {};
-        let currentCategory = 'all';
-        let personalizationData = {
-            diet: null,
-            mood: null,
-            selected: [],
-            currentStep: 1
-        };
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            renderMenu();
-            updateCartUI();
-            
-            // Add enter key support for search
-            const searchInput = document.querySelector('.search-input');
-            searchInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    searchMenu();
-                }
-            });
-        });
-
-        // Handle escape key for modals
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                if (document.getElementById('personalizationModal').classList.contains('active')) {
-                    closePersonalization();
-                } else if (document.getElementById('cartModal').classList.contains('active')) {
-                    closeCart();
-                }
-            }
-        });
-
-        // Prevent body scroll when modal is open
-        function preventBodyScroll(prevent) {
-            if (prevent) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = '';
-            }
-        }
-
-        // Render menu with beautiful cards
-        function renderMenu(items = menuData) {
-            const container = document.getElementById('menuContainer');
-            const filtered = items.filter(item => 
-                currentCategory === 'all' || item.category === currentCategory
-            );
-
-            container.innerHTML = filtered.map(item => `
-                <div class="menu-card" onclick="handleCardClick(${item.id})">
-                    <div class="menu-header">
-                        <div class="menu-title-group">
-                            <div class="menu-name">
-                                <span class="diet-badge ${item.veg ? 'veg' : 'nonveg'}">
-                                    ${item.veg ? '●' : '▲'}
-                                </span>
-                                ${item.name}
-                                ${item.popular ? '<span style="font-size: 14px;">🔥</span>' : ''}
-                            </div>
-                            <div class="menu-description">${item.description}</div>
-                        </div>
-                    </div>
-                    <div class="menu-footer">
-                        <div class="menu-meta">
-                            <span class="meta-item">⏱️ ${item.prepTime}m</span>
-                            <span class="meta-item">⭐ ${item.rating}</span>
-                            ${item.spicy > 0 ? `<span class="meta-item">${'🌶️'.repeat(Math.min(item.spicy, 3))}</span>` : ''}
-                        </div>
-                        <div class="price-add-group">
-                            <span class="price">₹${item.price}</span>
-                            ${cart[item.id] ? `
-                                <div class="quantity-controller" onclick="event.stopPropagation()">
-                                    <button class="qty-btn" onclick="updateCart(${item.id}, -1)">−</button>
-                                    <span class="qty-number">${cart[item.id]}</span>
-                                    <button class="qty-btn" onclick="updateCart(${item.id}, 1)">+</button>
-                                </div>
-                            ` : `
-                                <div class="add-button-group">
-                                    <button class="add-button" onclick="event.stopPropagation(); updateCart(${item.id}, 1)">
-                                        ADD
-                                    </button>
-                                </div>
-                            `}
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-
-            // Add entrance animation
-            container.querySelectorAll('.menu-card').forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                setTimeout(() => {
-                    card.style.transition = 'all 0.3s ease';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 50);
-            });
-        }
-
-        // Handle card click (shows details in real app)
-        function handleCardClick(itemId) {
-            // Could show item details modal here
-            console.log('Show details for item:', itemId);
-        }
-
-        // Search functionality
-        function searchMenu() {
-            const searchInput = document.querySelector('.search-input');
-            const searchTerm = searchInput.value.toLowerCase();
-            const filtered = menuData.filter(item => 
-                item.name.toLowerCase().includes(searchTerm) ||
-                item.description.toLowerCase().includes(searchTerm)
-            );
-            renderMenu(filtered);
-        }
-
-        // Category filter
-        function filterCategory(category) {
-            currentCategory = category;
-            
-            // Update active pill
-            document.querySelectorAll('.category-pill').forEach(pill => {
-                pill.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            renderMenu();
-        }
-
-        // Cart management with improved feedback
-        function updateCart(itemId, change) {
-            const item = menuData.find(i => i.id === itemId);
-            const currentQty = cart[itemId] || 0;
-            const newQty = Math.max(0, currentQty + change);
-            
-            if (newQty === 0) {
-                delete cart[itemId];
-                showToast(`${item.name} removed from cart`, '🗑️');
-            } else {
-                cart[itemId] = newQty;
-                
-                // Show different messages based on action
-                if (currentQty === 0) {
-                    showToast(`${item.name} added to cart`, '✓');
-                } else if (change > 0) {
-                    showToast(`${item.name} quantity updated to ${newQty}`, '✓');
-                } else {
-                    showToast(`${item.name} quantity updated to ${newQty}`, '✓');
-                }
-            }
-            
-            renderMenu();
-            updateCartUI();
-        }
-
-        // Show toast notification
-        function showToast(message, icon = '✓') {
-            const toast = document.getElementById('toast');
-            document.getElementById('toastMessage').textContent = message;
-            document.getElementById('toastIcon').textContent = icon;
-            
-            toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 2000);
-        }
-
-        // Update cart UI
-        function updateCartUI() {
-            const itemCount = Object.values(cart).reduce((sum, qty) => sum + qty, 0);
-            const total = Object.entries(cart).reduce((sum, [id, qty]) => {
-                const item = menuData.find(i => i.id === parseInt(id));
-                return sum + (item.price * qty);
-            }, 0);
-            
-            const floatingCart = document.getElementById('floatingCart');
-            
-            if (itemCount > 0) {
-                floatingCart.style.display = 'flex';
-                document.getElementById('cartCount').textContent = itemCount;
-                document.getElementById('cartTotal').textContent = `₹${total}`;
-                
-                // Animate cart appearance
-                if (!floatingCart.classList.contains('shown')) {
-                    floatingCart.classList.add('shown');
-                    floatingCart.style.transform = 'translateX(-50%) translateY(100px)';
-                    setTimeout(() => {
-                        floatingCart.style.transform = 'translateX(-50%) translateY(0)';
-                    }, 10);
-                }
-            } else {
-                floatingCart.style.display = 'none';
-                floatingCart.classList.remove('shown');
-            }
-        }
-
-        // Personalization flow
-        function startPersonalization() {
-            document.getElementById('personalizationModal').classList.add('active');
-            showStep(1);
-            personalizationData = { diet: null, mood: null, selected: [] };
-            preventBodyScroll(true);
-        }
-
-        function selectDiet(diet) {
-            personalizationData.diet = diet;
-            
-            // Update UI
-            document.querySelectorAll('#step1 .choice-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-            event.currentTarget.classList.add('selected');
-            
-            // Smooth transition to next step
-            setTimeout(() => showStep(2), 300);
-        }
-
-        function selectMood(mood) {
-            personalizationData.mood = mood;
-            
-            // Update UI
-            document.querySelectorAll('#step2 .choice-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-            event.currentTarget.classList.add('selected');
-            
-            // Generate recommendations
-            setTimeout(() => {
-                generateRecommendations();
-                showStep(3);
-            }, 300);
-        }
-
-        function showStep(step) {
-            // Save current step for back navigation
-            personalizationData.currentStep = step;
-            
-            document.querySelectorAll('.step').forEach(s => {
-                s.style.display = 'none';
-            });
-            
-            const currentStep = document.getElementById(`step${step}`);
-            currentStep.style.display = 'block';
-            
-            // Animate step entrance
-            currentStep.style.opacity = '0';
-            currentStep.style.transform = 'translateX(20px)';
-            setTimeout(() => {
-                currentStep.style.transition = 'all 0.3s ease';
-                currentStep.style.opacity = '1';
-                currentStep.style.transform = 'translateX(0)';
-            }, 10);
-        }
-
-        function generateRecommendations() {
-            // Smart filtering based on preferences
-            let filtered = menuData.filter(item => {
-                if (personalizationData.diet === 'veg') return item.veg;
-                if (personalizationData.diet === 'nonveg') return !item.veg;
-                return true;
-            });
-            
-            // Score items based on mood
-            const scored = filtered.map(item => {
-                let score = item.rating * 10;
-                
-                switch(personalizationData.mood) {
-                    case 'quick':
-                        if (item.prepTime <= 10) score += 30;
-                        else if (item.prepTime <= 15) score += 20;
-                        break;
-                    case 'hungry':
-                        if (item.category === 'mains') score += 30;
-                        if (item.price >= 250) score += 10;
-                        break;
-                    case 'light':
-                        if (item.category === 'starters' && item.prepTime <= 15) score += 20;
-                        if (item.spicy === 0) score += 10;
-                        break;
-                    case 'adventure':
-                        if (item.spicy >= 2) score += 20;
-                        if (!item.popular) score += 10; // Try something new
-                        break;
-                }
-                
-                if (item.popular) score += 5;
-                
-                return { ...item, score };
-            });
-            
-            // Get top recommendations
-            const recommendations = scored
-                .sort((a, b) => b.score - a.score)
-                .slice(0, 4);
-            
-            // Render recommendations with selection counter
-            const recommendationsBody = document.getElementById('recommendationsBody');
-            recommendationsBody.innerHTML = recommendations.map(item => {
-                const isSelected = personalizationData.selected.includes(item.id);
-                return `
-                    <div class="recommendation-card ${isSelected ? 'selected' : ''}" onclick="toggleRecommendation(${item.id})">
-                        ${isSelected ? `<div class="recommendation-selected">✓</div>` : ''}
-                        <div class="menu-header">
-                            <div class="menu-title-group">
-                                <div class="menu-name">
-                                    <span class="diet-badge ${item.veg ? 'veg' : 'nonveg'}">
-                                        ${item.veg ? '●' : '▲'}
-                                    </span>
-                                    ${item.name}
-                                </div>
-                                <div class="menu-description">${item.description}</div>
-                            </div>
-                            <span class="price">₹${item.price}</span>
-                        </div>
-                        <div class="menu-meta" style="margin-top: 8px;">
-                            <span class="meta-item">⏱️ ${item.prepTime}m</span>
-                            <span class="meta-item">⭐ ${item.rating}</span>
-                            ${item.popular ? '<span class="meta-item">🔥 Popular</span>' : ''}
-                        </div>
-                    </div>
-                `;
-            }).join('');
-            
-            updateSelectedCount();
-        }
-
-        function toggleRecommendation(itemId) {
-            const card = event.currentTarget;
-            card.classList.toggle('selected');
-            
-            const index = personalizationData.selected.indexOf(itemId);
-            if (index > -1) {
-                personalizationData.selected.splice(index, 1);
-            } else {
-                personalizationData.selected.push(itemId);
-            }
-            
-            updateSelectedCount();
-        }
-
-        function updateSelectedCount() {
-            document.getElementById('selectedCount').textContent = personalizationData.selected.length;
-        }
-
-        function addRecommendations() {
-            if (personalizationData.selected.length === 0) {
-                // Shake button if nothing selected
-                event.target.classList.add('shake');
-                setTimeout(() => {
-                    event.target.classList.remove('shake');
-                }, 500);
-                return;
-            }
-            
-            personalizationData.selected.forEach(itemId => {
-                cart[itemId] = (cart[itemId] || 0) + 1;
-            });
-            
-            closePersonalization();
-            renderMenu();
-            updateCartUI();
-            
-            // Show success message
-            const floatingCart = document.getElementById('floatingCart');
-            floatingCart.classList.add('success-pulse');
-            setTimeout(() => {
-                floatingCart.classList.remove('success-pulse');
-            }, 600);
-        }
-
-        function closePersonalization() {
-            document.getElementById('personalizationModal').classList.remove('active');
-            preventBodyScroll(false);
-        }
-
-        // Cart modal
-        function openCart() {
-            document.getElementById('cartModal').classList.add('active');
-            renderCart();
-            preventBodyScroll(true);
-        }
-
-        function closeCart() {
-            document.getElementById('cartModal').classList.remove('active');
-            preventBodyScroll(false);
-        }
-
-        function renderCart() {
-            const cartBody = document.getElementById('cartBody');
-            const entries = Object.entries(cart);
-            
-            if (entries.length === 0) {
-                cartBody.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">🛒</div>
-                        <p>Your cart is empty</p>
-                        <p style="font-size: 14px; margin-top: 8px;">Add some delicious items!</p>
-                    </div>
-                `;
-                document.getElementById('finalTotal').textContent = '₹0';
-                return;
-            }
-            
-            let subtotal = 0;
-            
-            cartBody.innerHTML = entries.map(([itemId, qty]) => {
-                const item = menuData.find(i => i.id === parseInt(itemId));
-                const itemTotal = item.price * qty;
-                subtotal += itemTotal;
-                
-                return `
-                    <div class="menu-card" style="margin-bottom: 12px;">
-                        <div class="menu-header">
-                            <div class="menu-title-group">
-                                <div class="menu-name">
-                                    <span class="diet-badge ${item.veg ? 'veg' : 'nonveg'}">
-                                        ${item.veg ? '●' : '▲'}
-                                    </span>
-                                    ${item.name}
-                                </div>
-                                <div class="menu-description">₹${item.price} × ${qty} = ₹${itemTotal}</div>
-                            </div>
-                            <div class="quantity-controller">
-                                <button class="qty-btn" onclick="updateCartItem(${item.id}, -1)">−</button>
-                                <span class="qty-number">${qty}</span>
-                                <button class="qty-btn" onclick="updateCartItem(${item.id}, 1)">+</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-            
-            // Add summary
-            const gst = Math.round(subtotal * 0.05);
-            const total = subtotal + gst;
-            
-            cartBody.innerHTML += `
-                <div style="border-top: 2px solid var(--gray-light); margin-top: 20px; padding-top: 20px;">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                        <span>Subtotal</span>
-                        <span>₹${subtotal}</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 16px; color: var(--gray);">
-                        <span>GST (5%)</span>
-                        <span>₹${gst}</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; font-size: 20px; font-weight: 700;">
-                        <span>Total</span>
-                        <span style="color: var(--primary);">₹${total}</span>
-                    </div>
-                </div>
-            `;
-            
-            document.getElementById('finalTotal').textContent = `₹${total}`;
-        }
-
-        function updateCartItem(itemId, change) {
-            updateCart(itemId, change);
-            renderCart();
-            
-            if (Object.keys(cart).length === 0) {
-                closeCart();
-            }
-        }
-
-        function placeOrder() {
-            if (Object.keys(cart).length === 0) return;
-            
-            // Animate button
-            const btn = event.target;
-            const originalContent = btn.innerHTML;
-            btn.innerHTML = '<span class="loading-spinner"></span> Placing order...';
-            btn.disabled = true;
-            
-            // Simulate API call
-            setTimeout(() => {
-                // Generate order number
-                const orderNum = Math.floor(Math.random() * 9000) + 1000;
-                
-                // Close cart modal
-                closeCart();
-                
-                // Show success overlay
-                document.getElementById('orderNumber').textContent = orderNum;
-                document.getElementById('orderSuccess').style.display = 'block';
-                
-                // Reset cart
-                cart = {};
-                updateCartUI();
-                renderMenu();
-                
-                // Hide success after 3 seconds
-                setTimeout(() => {
-                    document.getElementById('orderSuccess').style.display = 'none';
-                }, 3000);
-                
-                // Reset button
-                btn.innerHTML = originalContent;
-                btn.disabled = false;
-            }, 1500);
-        }
-    </script>
+            <!-- Bowls -->
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=300&q=80" alt="Poke Bowl">
+                <div class="tags"><span class="tag">Bowls</span><span class="tag">Healthy</span></div>
+                <div class="desc">Ahi tuna, rice, edamame, seaweed, and sesame.</div>
+                <div class="price">$13.49</div>
+                <button class="add-btn">Add</button>
+            </div>
+            <!-- Burgers -->
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=300&q=80" alt="Veggie Burger">
+                <div class="tags"><span class="tag">Burgers</span><span class="tag">Vegan</span></div>
+                <div class="desc">Chickpea patty, lettuce, tomato, vegan mayo on brioche.</div>
+                <div class="price">$7.99</div>
+                <button class="add-btn">Add</button>
+            </div>
+            <!-- Desserts -->
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1505250469679-203ad9ced0cb?auto=format&fit=crop&w=300&q=80" alt="Choco Lava Cake">
+                <div class="tags"><span class="tag">Desserts</span></div>
+                <div class="desc">Warm chocolate cake with gooey chocolate center.</div>
+                <div class="price">$4.99</div>
+                <button class="add-btn">Add</button>
+            </div>
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1464306076886-debca5e8a6b0?auto=format&fit=crop&w=300&q=80" alt="Fruit Tart">
+                <div class="tags"><span class="tag">Desserts</span></div>
+                <div class="desc">Buttery crust, pastry cream, topped with fresh fruits.</div>
+                <div class="price">$5.49</div>
+                <button class="add-btn">Add</button>
+            </div>
+            <!-- Drinks -->
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=300&q=80" alt="Cold Brew">
+                <div class="tags"><span class="tag">Drinks</span></div>
+                <div class="desc">Smooth, chilled, slow-brewed coffee served on ice.</div>
+                <div class="price">$2.99</div>
+                <button class="add-btn">Add</button>
+            </div>
+            <!-- Snacks -->
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=300&q=80" alt="Samosa">
+                <div class="tags"><span class="tag">Snacks</span><span class="tag">Indian</span></div>
+                <div class="desc">Crispy pastry filled with spiced potatoes and peas.</div>
+                <div class="price">$1.99</div>
+                <button class="add-btn">Add</button>
+            </div>
+        </section>
+    </main>
+    <footer style="text-align:center;margin:32px 0 16px;color:#aaa;font-size:0.98em;">
+        Your delicious food will be ready soon
+    </footer>
 </body>
 </html>
