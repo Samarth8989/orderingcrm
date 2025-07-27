@@ -304,6 +304,7 @@
             height: 20px;
             border-radius: 6px;
             font-size: 12px;
+            line-height: 1;
         }
 
         .diet-badge.veg {
@@ -556,12 +557,6 @@
             align-items: center;
             justify-content: center;
             font-weight: 700;
-        }
-
-        .choice-emoji {
-            font-size: 48px;
-            margin-bottom: 12px;
-            display: block;
         }
 
         .choice-title {
@@ -832,7 +827,7 @@
     <header class="header">
         <div class="header-content">
             <div class="logo">Crave</div>
-            <div class="table-badge">📍 Table 5</div>
+            <div class="table-badge">Table 5</div>
         </div>
     </header>
 
@@ -841,14 +836,14 @@
         <h1 class="greeting">What's your craving?</h1>
         <p class="hero-subtitle">Let's find you something delicious</p>
         <button class="magic-button" onclick="startPersonalization()">
-            ✨ Get Smart Recommendations
+            Get Smart Recommendations
         </button>
     </section>
 
     <!-- Search Section -->
     <section class="search-section">
         <div class="search-container">
-            <span class="search-icon">🔍</span>
+            <span class="search-icon">Search</span>
             <input type="text" class="search-input" placeholder="Search for dishes, cuisines..." onkeyup="searchMenu()">
         </div>
     </section>
@@ -856,12 +851,12 @@
     <!-- Categories -->
     <section class="categories">
         <div class="category-scroll">
-            <div class="category-pill active" onclick="filterCategory('all')">🍽️ All</div>
-            <div class="category-pill" onclick="filterCategory('starters')">🥟 Starters</div>
-            <div class="category-pill" onclick="filterCategory('mains')">🍛 Mains</div>
-            <div class="category-pill" onclick="filterCategory('chinese')">🥡 Chinese</div>
-            <div class="category-pill" onclick="filterCategory('drinks')">🥤 Drinks</div>
-            <div class="category-pill" onclick="filterCategory('desserts')">🍰 Desserts</div>
+            <div class="category-pill active" onclick="filterCategory('all')">All</div>
+            <div class="category-pill" onclick="filterCategory('starters')">Starters</div>
+            <div class="category-pill" onclick="filterCategory('mains')">Mains</div>
+            <div class="category-pill" onclick="filterCategory('chinese')">Chinese</div>
+            <div class="category-pill" onclick="filterCategory('drinks')">Drinks</div>
+            <div class="category-pill" onclick="filterCategory('desserts')">Desserts</div>
         </div>
     </section>
 
@@ -884,23 +879,20 @@
             <div id="step1" class="step">
                 <button class="skip-button" onclick="closePersonalization()">Skip</button>
                 <div class="modal-header">
-                    <h2 class="modal-title">First, tell us your preference 🌿</h2>
+                    <h2 class="modal-title">First, tell us your preference</h2>
                     <p class="modal-subtitle">We'll customize everything just for you</p>
                 </div>
                 <div class="modal-body">
                     <div class="choice-grid">
                         <div class="choice-card" onclick="selectDiet('veg')">
-                            <span class="choice-emoji">🥬</span>
                             <div class="choice-title">Vegetarian</div>
                             <div class="choice-desc">Plant-based only</div>
                         </div>
                         <div class="choice-card" onclick="selectDiet('nonveg')">
-                            <span class="choice-emoji">🍗</span>
                             <div class="choice-title">Non-Vegetarian</div>
                             <div class="choice-desc">Include meat dishes</div>
                         </div>
                         <div class="choice-card" onclick="selectDiet('both')">
-                            <span class="choice-emoji">🍱</span>
                             <div class="choice-title">Everything</div>
                             <div class="choice-desc">Show me all options</div>
                         </div>
@@ -913,30 +905,26 @@
                 <button class="back-button" onclick="showStep(1)">←</button>
                 <button class="skip-button" onclick="closePersonalization()">Skip</button>
                 <div class="modal-header">
-                    <h2 class="modal-title">How's your appetite? 😋</h2>
-                    <p class="modal-subtitle">We'll match the perfect portions</p>
+                    <h2 class="modal-title">What are you in the mood for?</h2>
+                    <p class="modal-subtitle">We'll match the perfect options</p>
                 </div>
                 <div class="modal-body">
                     <div class="choice-grid">
                         <div class="choice-card" onclick="selectMood('quick')">
-                            <span class="choice-emoji">⚡</span>
                             <div class="choice-title">Quick Bite</div>
                             <div class="choice-desc">Ready in 15 mins</div>
                         </div>
-                        <div class="choice-card" onclick="selectMood('hungry')">
-                            <span class="choice-emoji">🦁</span>
-                            <div class="choice-title">Hungry</div>
-                            <div class="choice-desc">Full meals please</div>
+                        <div class="choice-card" onclick="selectMood('hearty')">
+                            <div class="choice-title">Hearty Meal</div>
+                            <div class="choice-desc">Full portions & filling</div>
                         </div>
-                        <div class="choice-card" onclick="selectMood('light')">
-                            <span class="choice-emoji">🥗</span>
-                            <div class="choice-title">Light</div>
-                            <div class="choice-desc">Healthy & fresh</div>
+                        <div class="choice-card" onclick="selectMood('healthy')">
+                            <div class="choice-title">Healthy Choice</div>
+                            <div class="choice-desc">Light & nutritious</div>
                         </div>
-                        <div class="choice-card" onclick="selectMood('adventure')">
-                            <span class="choice-emoji">🌶️</span>
-                            <div class="choice-title">Adventurous</div>
-                            <div class="choice-desc">Spicy & bold</div>
+                        <div class="choice-card" onclick="selectMood('indulgent')">
+                            <div class="choice-title">Indulgent</div>
+                            <div class="choice-desc">Rich & flavorful</div>
                         </div>
                     </div>
                 </div>
@@ -946,7 +934,7 @@
             <div id="step3" class="step" style="display: none;">
                 <button class="back-button" onclick="showStep(2)">←</button>
                 <div class="modal-header">
-                    <h2 class="modal-title">Perfect matches for you! 🎯</h2>
+                    <h2 class="modal-title">Perfect matches for you!</h2>
                     <p class="modal-subtitle">Tap to select what looks good</p>
                 </div>
                 <div class="modal-body" id="recommendationsBody">
@@ -966,7 +954,7 @@
     <div id="cartModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">Your Order 🛒</h2>
+                <h2 class="modal-title">Your Order</h2>
                 <p class="modal-subtitle">Everything looks delicious!</p>
             </div>
             <div class="modal-body" id="cartBody">
@@ -990,14 +978,16 @@
     <!-- Order Success Overlay -->
     <div id="orderSuccess" class="order-success" style="display: none;">
         <div class="success-icon">🎉</div>
-        <h2 style="margin-bottom: 12px;">Order Placed!</h2>
-        <p style="color: var(--gray);">Your delicious food will be ready soon</p>
-        <p style="margin-top: 20px; font-size: 14px;">Order #<strong id="orderNumber"></strong></p>
+        <h2 style="margin-bottom: 12px;">Order Confirmed!</h2>
+        <p style="color: var(--gray); margin-bottom: 8px;">Your food is being prepared</p>
+        <p style="color: var(--primary); font-weight: 600;">Estimated time: 20-25 minutes</p>
+        <p style="margin-top: 20px; font-size: 14px; color: var(--gray);">Order #<strong style="color: var(--dark);" id="orderNumber"></strong></p>
     </div>
 
     <script>
-        // Enhanced menu data
+        // Enhanced menu data with more items and better categorization
         const menuData = [
+            // Starters
             {
                 id: 1,
                 name: "Paneer Tikka",
@@ -1008,7 +998,9 @@
                 prepTime: 15,
                 rating: 4.5,
                 popular: true,
-                spicy: 2
+                spicy: 2,
+                healthy: false,
+                quick: true
             },
             {
                 id: 2,
@@ -1020,10 +1012,98 @@
                 prepTime: 20,
                 rating: 4.7,
                 popular: true,
-                spicy: 2
+                spicy: 2,
+                healthy: false,
+                quick: false
             },
             {
                 id: 3,
+                name: "Garden Salad",
+                description: "Fresh mixed greens with olive oil dressing",
+                price: 160,
+                category: "starters",
+                veg: true,
+                prepTime: 8,
+                rating: 4.2,
+                popular: false,
+                spicy: 0,
+                healthy: true,
+                quick: true
+            },
+            {
+                id: 4,
+                name: "Corn Cheese Balls",
+                description: "Crispy golden balls filled with sweet corn and cheese",
+                price: 180,
+                category: "starters",
+                veg: true,
+                prepTime: 12,
+                rating: 4.3,
+                popular: false,
+                spicy: 0,
+                healthy: false,
+                quick: true
+            },
+            {
+                id: 5,
+                name: "Fish Fingers",
+                description: "Battered fish strips with tartar sauce",
+                price: 260,
+                category: "starters",
+                veg: false,
+                prepTime: 18,
+                rating: 4.4,
+                popular: false,
+                spicy: 1,
+                healthy: false,
+                quick: false
+            },
+            {
+                id: 24,
+                name: "Chicken Popcorn",
+                description: "Bite-sized crispy chicken pieces",
+                price: 200,
+                category: "starters",
+                veg: false,
+                prepTime: 12,
+                rating: 4.3,
+                popular: false,
+                spicy: 1,
+                healthy: false,
+                quick: true
+            },
+            {
+                id: 25,
+                name: "Egg Rolls",
+                description: "Golden fried rolls with spiced egg filling",
+                price: 140,
+                category: "starters",
+                veg: false,
+                prepTime: 10,
+                rating: 4.1,
+                popular: false,
+                spicy: 1,
+                healthy: false,
+                quick: true
+            },
+            {
+                id: 26,
+                name: "Chicken Seekh Kebab",
+                description: "Grilled minced chicken skewers",
+                price: 240,
+                category: "starters",
+                veg: false,
+                prepTime: 15,
+                rating: 4.5,
+                popular: true,
+                spicy: 2,
+                healthy: false,
+                quick: true
+            },
+
+            // Main Courses
+            {
+                id: 6,
                 name: "Veg Biryani",
                 description: "Fragrant basmati rice with garden vegetables",
                 price: 240,
@@ -1032,10 +1112,12 @@
                 prepTime: 25,
                 rating: 4.3,
                 popular: false,
-                spicy: 2
+                spicy: 2,
+                healthy: false,
+                quick: false
             },
             {
-                id: 4,
+                id: 7,
                 name: "Butter Chicken",
                 description: "Creamy tomato gravy with tender chicken",
                 price: 320,
@@ -1044,10 +1126,70 @@
                 prepTime: 30,
                 rating: 4.8,
                 popular: true,
-                spicy: 1
+                spicy: 1,
+                healthy: false,
+                quick: false
             },
             {
-                id: 5,
+                id: 8,
+                name: "Dal Tadka",
+                description: "Yellow lentils tempered with aromatic spices",
+                price: 180,
+                category: "mains",
+                veg: true,
+                prepTime: 15,
+                rating: 4.1,
+                popular: false,
+                spicy: 1,
+                healthy: true,
+                quick: true
+            },
+            {
+                id: 9,
+                name: "Grilled Chicken Breast",
+                description: "Herb-marinated chicken with steamed vegetables",
+                price: 350,
+                category: "mains",
+                veg: false,
+                prepTime: 20,
+                rating: 4.5,
+                popular: false,
+                spicy: 0,
+                healthy: true,
+                quick: false
+            },
+            {
+                id: 10,
+                name: "Rajma Rice",
+                description: "Kidney bean curry with steamed rice",
+                price: 200,
+                category: "mains",
+                veg: true,
+                prepTime: 18,
+                rating: 4.2,
+                popular: false,
+                spicy: 2,
+                healthy: true,
+                quick: false
+            },
+            {
+                id: 11,
+                name: "Mutton Curry",
+                description: "Tender mutton in rich spiced gravy",
+                price: 420,
+                category: "mains",
+                veg: false,
+                prepTime: 45,
+                rating: 4.6,
+                popular: false,
+                spicy: 3,
+                healthy: false,
+                quick: false
+            },
+
+            // Chinese
+            {
+                id: 12,
                 name: "Hakka Noodles",
                 description: "Wok-tossed noodles with crunchy vegetables",
                 price: 180,
@@ -1056,10 +1198,182 @@
                 prepTime: 15,
                 rating: 4.2,
                 popular: false,
-                spicy: 1
+                spicy: 1,
+                healthy: false,
+                quick: true
             },
             {
-                id: 6,
+                id: 13,
+                name: "Chicken Fried Rice",
+                description: "Wok-fried rice with chicken and vegetables",
+                price: 220,
+                category: "chinese",
+                veg: false,
+                prepTime: 18,
+                rating: 4.4,
+                popular: true,
+                spicy: 1,
+                healthy: false,
+                quick: false
+            },
+            {
+                id: 14,
+                name: "Chili Paneer",
+                description: "Spicy cottage cheese in tangy sauce",
+                price: 240,
+                category: "chinese",
+                veg: true,
+                prepTime: 20,
+                rating: 4.5,
+                popular: true,
+                spicy: 3,
+                healthy: false,
+                quick: false
+            },
+            {
+                id: 15,
+                name: "Steamed Momos",
+                description: "Vegetable dumplings with spicy chutney",
+                price: 120,
+                category: "chinese",
+                veg: true,
+                prepTime: 12,
+                rating: 4.3,
+                popular: false,
+                spicy: 0,
+                healthy: true,
+                quick: true
+            },
+            {
+                id: 27,
+                name: "Chicken Momos",
+                description: "Steamed chicken dumplings with chutney",
+                price: 150,
+                category: "chinese",
+                veg: false,
+                prepTime: 12,
+                rating: 4.4,
+                popular: true,
+                spicy: 1,
+                healthy: false,
+                quick: true
+            },
+            {
+                id: 28,
+                name: "Veg Spring Rolls",
+                description: "Crispy rolls with fresh vegetables",
+                price: 130,
+                category: "chinese",
+                veg: true,
+                prepTime: 10,
+                rating: 4.2,
+                popular: false,
+                spicy: 0,
+                healthy: true,
+                quick: true
+            },
+            {
+                id: 29,
+                name: "Chicken Manchurian Dry",
+                description: "Spicy dry chicken with bell peppers",
+                price: 220,
+                category: "chinese",
+                veg: false,
+                prepTime: 15,
+                rating: 4.3,
+                popular: false,
+                spicy: 2,
+                healthy: false,
+                quick: true
+            },
+            {
+                id: 30,
+                name: "Veg Sandwich",
+                description: "Grilled sandwich with fresh vegetables and cheese",
+                price: 80,
+                category: "starters",
+                veg: true,
+                prepTime: 8,
+                rating: 4.0,
+                popular: false,
+                spicy: 0,
+                healthy: true,
+                quick: true
+            },
+            {
+                id: 31,
+                name: "Chicken Sandwich",
+                description: "Grilled chicken sandwich with mayo and lettuce",
+                price: 120,
+                category: "starters",
+                veg: false,
+                prepTime: 10,
+                rating: 4.2,
+                popular: false,
+                spicy: 0,
+                healthy: false,
+                quick: true
+            },
+            {
+                id: 32,
+                name: "Masala Omelette",
+                description: "Spiced omelette with onions and chilies",
+                price: 60,
+                category: "starters",
+                veg: false,
+                prepTime: 8,
+                rating: 4.1,
+                popular: false,
+                spicy: 2,
+                healthy: false,
+                quick: true
+            },
+            {
+                id: 33,
+                name: "Pasta Arrabbiata",
+                description: "Spicy tomato pasta with herbs",
+                price: 180,
+                category: "mains",
+                veg: true,
+                prepTime: 15,
+                rating: 4.3,
+                popular: false,
+                spicy: 2,
+                healthy: false,
+                quick: true
+            },
+            {
+                id: 34,
+                name: "Chicken Wrap",
+                description: "Grilled chicken wrap with vegetables",
+                price: 140,
+                category: "mains",
+                veg: false,
+                prepTime: 10,
+                rating: 4.2,
+                popular: false,
+                spicy: 1,
+                healthy: false,
+                quick: true
+            },
+            {
+                id: 35,
+                name: "Tuna Salad",
+                description: "Fresh tuna with mixed greens and olive oil",
+                price: 220,
+                category: "starters",
+                veg: false,
+                prepTime: 8,
+                rating: 4.4,
+                popular: false,
+                spicy: 0,
+                healthy: true,
+                quick: true
+            },
+
+            // Drinks
+            {
+                id: 16,
                 name: "Fresh Lime Soda",
                 description: "Zesty lime with mint and soda",
                 price: 60,
@@ -1068,10 +1382,70 @@
                 prepTime: 5,
                 rating: 4.4,
                 popular: true,
-                spicy: 0
+                spicy: 0,
+                healthy: true,
+                quick: true
             },
             {
-                id: 7,
+                id: 17,
+                name: "Mango Lassi",
+                description: "Creamy yogurt drink with fresh mango",
+                price: 80,
+                category: "drinks",
+                veg: true,
+                prepTime: 5,
+                rating: 4.6,
+                popular: false,
+                spicy: 0,
+                healthy: false,
+                quick: true
+            },
+            {
+                id: 18,
+                name: "Green Tea",
+                description: "Antioxidant-rich traditional green tea",
+                price: 40,
+                category: "drinks",
+                veg: true,
+                prepTime: 3,
+                rating: 4.0,
+                popular: false,
+                spicy: 0,
+                healthy: true,
+                quick: true
+            },
+            {
+                id: 19,
+                name: "Cold Coffee",
+                description: "Iced coffee with milk and vanilla",
+                price: 90,
+                category: "drinks",
+                veg: true,
+                prepTime: 5,
+                rating: 4.5,
+                popular: true,
+                spicy: 0,
+                healthy: false,
+                quick: true
+            },
+
+            // Desserts
+            {
+                id: 20,
+                name: "Fresh Fruit Bowl",
+                description: "Seasonal fruits with honey drizzle",
+                price: 100,
+                category: "desserts",
+                veg: true,
+                prepTime: 5,
+                rating: 4.3,
+                popular: false,
+                spicy: 0,
+                healthy: true,
+                quick: true
+            },
+            {
+                id: 21,
                 name: "Chocolate Lava Cake",
                 description: "Warm cake with molten chocolate center",
                 price: 120,
@@ -1080,7 +1454,37 @@
                 prepTime: 10,
                 rating: 4.9,
                 popular: true,
-                spicy: 0
+                spicy: 0,
+                healthy: false,
+                quick: true
+            },
+            {
+                id: 22,
+                name: "Kulfi",
+                description: "Traditional Indian ice cream with pistachios",
+                price: 70,
+                category: "desserts",
+                veg: true,
+                prepTime: 2,
+                rating: 4.4,
+                popular: false,
+                spicy: 0,
+                healthy: false,
+                quick: true
+            },
+            {
+                id: 23,
+                name: "Tiramisu",
+                description: "Classic Italian dessert with coffee and mascarpone",
+                price: 150,
+                category: "desserts",
+                veg: true,
+                prepTime: 5,
+                rating: 4.7,
+                popular: false,
+                spicy: 0,
+                healthy: false,
+                quick: true
             }
         ];
 
@@ -1144,16 +1548,17 @@
                                     ${item.veg ? '●' : '▲'}
                                 </span>
                                 ${item.name}
-                                ${item.popular ? '<span style="font-size: 14px;">🔥</span>' : ''}
+                                ${item.popular ? '<span style="font-size: 14px;">Popular</span>' : ''}
                             </div>
                             <div class="menu-description">${item.description}</div>
                         </div>
                     </div>
                     <div class="menu-footer">
                         <div class="menu-meta">
-                            <span class="meta-item">⏱️ ${item.prepTime}m</span>
-                            <span class="meta-item">⭐ ${item.rating}</span>
-                            ${item.spicy > 0 ? `<span class="meta-item">${'🌶️'.repeat(Math.min(item.spicy, 3))}</span>` : ''}
+                            <span class="meta-item">${item.prepTime}m</span>
+                            <span class="meta-item">★ ${item.rating}</span>
+                            ${item.spicy > 0 ? `<span class="meta-item">${'Spicy'.repeat(Math.min(item.spicy, 1))}</span>` : ''}
+                            ${item.healthy ? '<span class="meta-item">Healthy</span>' : ''}
                         </div>
                         <div class="price-add-group">
                             <span class="price">₹${item.price}</span>
@@ -1212,7 +1617,14 @@
             document.querySelectorAll('.category-pill').forEach(pill => {
                 pill.classList.remove('active');
             });
-            event.target.classList.add('active');
+            
+            // Find the clicked element and make it active
+            const clickedPill = Array.from(document.querySelectorAll('.category-pill')).find(pill => 
+                pill.textContent.toLowerCase().includes(category === 'all' ? 'all' : category)
+            );
+            if (clickedPill) {
+                clickedPill.classList.add('active');
+            }
             
             renderMenu();
         }
@@ -1225,17 +1637,17 @@
             
             if (newQty === 0) {
                 delete cart[itemId];
-                showToast(`${item.name} removed from cart`, '🗑️');
+                showToast(`${item.name} removed from cart`, 'Removed');
             } else {
                 cart[itemId] = newQty;
                 
                 // Show different messages based on action
                 if (currentQty === 0) {
-                    showToast(`${item.name} added to cart`, '✓');
+                    showToast(`${item.name} added to cart`, 'Added');
                 } else if (change > 0) {
-                    showToast(`${item.name} quantity updated to ${newQty}`, '✓');
+                    showToast(`${item.name} quantity updated to ${newQty}`, 'Updated');
                 } else {
-                    showToast(`${item.name} quantity updated to ${newQty}`, '✓');
+                    showToast(`${item.name} quantity updated to ${newQty}`, 'Updated');
                 }
             }
             
@@ -1244,7 +1656,7 @@
         }
 
         // Show toast notification
-        function showToast(message, icon = '✓') {
+        function showToast(message, icon = 'Success') {
             const toast = document.getElementById('toast');
             document.getElementById('toastMessage').textContent = message;
             document.getElementById('toastIcon').textContent = icon;
@@ -1300,7 +1712,14 @@
             document.querySelectorAll('#step1 .choice-card').forEach(card => {
                 card.classList.remove('selected');
             });
-            event.currentTarget.classList.add('selected');
+            
+            // Find and select the clicked card
+            const clickedCard = Array.from(document.querySelectorAll('#step1 .choice-card')).find(card => 
+                card.querySelector('.choice-title').textContent.toLowerCase().includes(diet === 'both' ? 'everything' : diet)
+            );
+            if (clickedCard) {
+                clickedCard.classList.add('selected');
+            }
             
             // Smooth transition to next step
             setTimeout(() => showStep(2), 300);
@@ -1313,7 +1732,21 @@
             document.querySelectorAll('#step2 .choice-card').forEach(card => {
                 card.classList.remove('selected');
             });
-            event.currentTarget.classList.add('selected');
+            
+            // Find and select the clicked card
+            const moodMap = {
+                'quick': 'Quick Bite',
+                'hearty': 'Hearty Meal', 
+                'healthy': 'Healthy Choice',
+                'indulgent': 'Indulgent'
+            };
+            
+            const clickedCard = Array.from(document.querySelectorAll('#step2 .choice-card')).find(card => 
+                card.querySelector('.choice-title').textContent === moodMap[mood]
+            );
+            if (clickedCard) {
+                clickedCard.classList.add('selected');
+            }
             
             // Generate recommendations
             setTimeout(() => {
@@ -1351,26 +1784,42 @@
                 return true;
             });
             
-            // Score items based on mood
+            // Score items based on mood with improved logic
             const scored = filtered.map(item => {
                 let score = item.rating * 10;
                 
                 switch(personalizationData.mood) {
                     case 'quick':
-                        if (item.prepTime <= 10) score += 30;
-                        else if (item.prepTime <= 15) score += 20;
+                        // STRICT filtering: Only items marked as quick AND prep time <= 15 mins
+                        if (item.quick && item.prepTime <= 15) {
+                            score += 50;
+                        } else {
+                            score = 0; // Completely exclude non-quick items
+                            return { ...item, score };
+                        }
                         break;
-                    case 'hungry':
+                    case 'hearty':
+                        // Full meals, higher prices, substantial portions
                         if (item.category === 'mains') score += 30;
-                        if (item.price >= 250) score += 10;
+                        if (item.price >= 250) score += 15;
+                        if (item.prepTime >= 20) score += 10; // More prep time = more substantial
                         break;
-                    case 'light':
-                        if (item.category === 'starters' && item.prepTime <= 15) score += 20;
+                    case 'healthy':
+                        // Only healthy items
+                        if (item.healthy) {
+                            score += 40;
+                        } else {
+                            score -= 50; // Heavy penalty for non-healthy items
+                        }
                         if (item.spicy === 0) score += 10;
+                        if (item.category === 'desserts' && !item.healthy) score -= 30;
                         break;
-                    case 'adventure':
-                        if (item.spicy >= 2) score += 20;
-                        if (!item.popular) score += 10; // Try something new
+                    case 'indulgent':
+                        // Rich, flavorful, indulgent items
+                        if (!item.healthy) score += 20;
+                        if (item.category === 'desserts') score += 25;
+                        if (item.spicy >= 2) score += 15;
+                        if (item.price >= 200) score += 10;
                         break;
                 }
                 
@@ -1379,8 +1828,9 @@
                 return { ...item, score };
             });
             
-            // Get top recommendations
+            // Get top recommendations, filter out very low scores for better matching
             const recommendations = scored
+                .filter(item => item.score > 30) // Increased threshold to filter better
                 .sort((a, b) => b.score - a.score)
                 .slice(0, 4);
             
@@ -1389,7 +1839,7 @@
             recommendationsBody.innerHTML = recommendations.map(item => {
                 const isSelected = personalizationData.selected.includes(item.id);
                 return `
-                    <div class="recommendation-card ${isSelected ? 'selected' : ''}" onclick="toggleRecommendation(${item.id})">
+                    <div class="recommendation-card ${isSelected ? 'selected' : ''}" onclick="toggleRecommendation(${item.id}, event)">
                         ${isSelected ? `<div class="recommendation-selected">✓</div>` : ''}
                         <div class="menu-header">
                             <div class="menu-title-group">
@@ -1401,12 +1851,30 @@
                                 </div>
                                 <div class="menu-description">${item.description}</div>
                             </div>
-                            <span class="price">₹${item.price}</span>
                         </div>
-                        <div class="menu-meta" style="margin-top: 8px;">
-                            <span class="meta-item">⏱️ ${item.prepTime}m</span>
-                            <span class="meta-item">⭐ ${item.rating}</span>
-                            ${item.popular ? '<span class="meta-item">🔥 Popular</span>' : ''}
+                        <div class="menu-footer" style="margin-top: 12px;">
+                            <div class="menu-meta">
+                                <span class="meta-item">${item.prepTime}m</span>
+                                <span class="meta-item">★ ${item.rating}</span>
+                                ${item.popular ? '<span class="meta-item">Popular</span>' : ''}
+                                ${item.healthy ? '<span class="meta-item">Healthy</span>' : ''}
+                            </div>
+                            <div class="price-add-group">
+                                <span class="price">₹${item.price}</span>
+                                ${cart[item.id] ? `
+                                    <div class="quantity-controller" onclick="event.stopPropagation()">
+                                        <button class="qty-btn" onclick="updateCartFromRecommendation(${item.id}, -1, event)">−</button>
+                                        <span class="qty-number">${cart[item.id]}</span>
+                                        <button class="qty-btn" onclick="updateCartFromRecommendation(${item.id}, 1, event)">+</button>
+                                    </div>
+                                ` : `
+                                    <div class="add-button-group">
+                                        <button class="add-button" onclick="updateCartFromRecommendation(${item.id}, 1, event)">
+                                            ADD
+                                        </button>
+                                    </div>
+                                `}
+                            </div>
                         </div>
                     </div>
                 `;
@@ -1415,9 +1883,20 @@
             updateSelectedCount();
         }
 
-        function toggleRecommendation(itemId) {
-            const card = event.currentTarget;
-            card.classList.toggle('selected');
+        function toggleRecommendation(itemId, event) {
+            // Don't toggle if clicking on buttons
+            if (event && (event.target.classList.contains('qty-btn') || event.target.classList.contains('add-button'))) {
+                return;
+            }
+            
+            // Find the clicked card
+            const clickedCard = Array.from(document.querySelectorAll('.recommendation-card')).find(card => 
+                card.onclick.toString().includes(itemId.toString())
+            );
+            
+            if (clickedCard) {
+                clickedCard.classList.toggle('selected');
+            }
             
             const index = personalizationData.selected.indexOf(itemId);
             if (index > -1) {
@@ -1429,6 +1908,74 @@
             updateSelectedCount();
         }
 
+        // Separate function for cart updates from recommendations
+        function updateCartFromRecommendation(itemId, change, event) {
+            event.stopPropagation(); // Prevent card selection toggle
+            
+            const item = menuData.find(i => i.id === itemId);
+            const currentQty = cart[itemId] || 0;
+            const newQty = Math.max(0, currentQty + change);
+            
+            if (newQty === 0) {
+                delete cart[itemId];
+                showToast(`${item.name} removed from cart`, 'Removed');
+            } else {
+                cart[itemId] = newQty;
+                
+                if (currentQty === 0) {
+                    showToast(`${item.name} added to cart`, 'Added');
+                } else {
+                    showToast(`${item.name} quantity updated to ${newQty}`, 'Updated');
+                }
+            }
+            
+            // Update cart UI immediately
+            updateCartUI();
+            
+            // Re-render only the specific recommendation card that was updated
+            updateRecommendationCard(itemId);
+        }
+
+        // Update only a specific recommendation card
+        function updateRecommendationCard(itemId) {
+            const item = menuData.find(i => i.id === itemId);
+            const isSelected = personalizationData.selected.includes(itemId);
+            
+            // Find the card and update its content
+            const cards = document.querySelectorAll('.recommendation-card');
+            cards.forEach(card => {
+                if (card.onclick.toString().includes(itemId.toString())) {
+                    const priceAddGroup = card.querySelector('.price-add-group');
+                    if (priceAddGroup) {
+                        const priceSpan = priceAddGroup.querySelector('.price');
+                        priceSpan.innerHTML = `₹${item.price}`;
+                        
+                        // Update the add button area
+                        const addArea = priceAddGroup.querySelector('.add-button-group, .quantity-controller');
+                        if (addArea) {
+                            if (cart[itemId]) {
+                                addArea.outerHTML = `
+                                    <div class="quantity-controller" onclick="event.stopPropagation()">
+                                        <button class="qty-btn" onclick="updateCartFromRecommendation(${itemId}, -1, event)">−</button>
+                                        <span class="qty-number">${cart[itemId]}</span>
+                                        <button class="qty-btn" onclick="updateCartFromRecommendation(${itemId}, 1, event)">+</button>
+                                    </div>
+                                `;
+                            } else {
+                                addArea.outerHTML = `
+                                    <div class="add-button-group">
+                                        <button class="add-button" onclick="updateCartFromRecommendation(${itemId}, 1, event)">
+                                            ADD
+                                        </button>
+                                    </div>
+                                `;
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
         function updateSelectedCount() {
             document.getElementById('selectedCount').textContent = personalizationData.selected.length;
         }
@@ -1436,10 +1983,13 @@
         function addRecommendations() {
             if (personalizationData.selected.length === 0) {
                 // Shake button if nothing selected
-                event.target.classList.add('shake');
-                setTimeout(() => {
-                    event.target.classList.remove('shake');
-                }, 500);
+                const button = document.querySelector('#step3 .modal-btn.primary');
+                if (button) {
+                    button.classList.add('shake');
+                    setTimeout(() => {
+                        button.classList.remove('shake');
+                    }, 500);
+                }
                 return;
             }
             
@@ -1483,7 +2033,7 @@
             if (entries.length === 0) {
                 cartBody.innerHTML = `
                     <div class="empty-state">
-                        <div class="empty-state-icon">🛒</div>
+                        <div class="empty-state-icon">Cart</div>
                         <p>Your cart is empty</p>
                         <p style="font-size: 14px; margin-top: 8px;">Add some delicious items!</p>
                     </div>
