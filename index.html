@@ -38,7 +38,7 @@
             color: var(--dark);
             line-height: 1.6;
             overflow-x: hidden;
-            padding-bottom: 100px;
+            padding-bottom: 120px;
         }
 
         html {
@@ -337,6 +337,7 @@
             gap: 16px;
             font-size: 13px;
             color: var(--gray);
+            flex-wrap: wrap;
         }
 
         .meta-item {
@@ -437,6 +438,7 @@
             cursor: pointer;
             transition: var(--transition);
             z-index: 1000;
+            user-select: none;
         }
 
         .floating-cart:hover {
@@ -495,6 +497,7 @@
             padding: 24px;
             text-align: center;
             border-bottom: 1px solid var(--gray-light);
+            position: relative;
         }
 
         .modal-title {
@@ -502,6 +505,9 @@
             font-weight: 800;
             color: var(--dark);
             margin-bottom: 8px;
+            padding: 0 60px;
+            word-wrap: break-word;
+            line-height: 1.3;
         }
 
         .modal-subtitle {
@@ -513,6 +519,7 @@
             padding: 24px;
             overflow-y: auto;
             max-height: 60vh;
+            overflow-x: hidden;
         }
 
         .choice-grid {
@@ -577,8 +584,8 @@
             border-radius: var(--radius-sm);
             padding: 16px;
             margin-bottom: 12px;
-            cursor: pointer;
             transition: var(--transition);
+            position: relative;
         }
 
         .recommendation-card:hover {
@@ -608,6 +615,18 @@
             font-weight: 700;
             cursor: pointer;
             transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+        
+        .modal-btn:active {
+            transform: scale(0.98);
         }
 
         .modal-btn.primary {
@@ -627,6 +646,15 @@
         .modal-btn.secondary:hover {
             background: var(--gray);
             color: white;
+        }
+
+        .modal-btn span {
+            pointer-events: none;
+            display: inline-block;
+        }
+        
+        .modal-btn * {
+            pointer-events: none;
         }
 
         .loading-spinner {
@@ -659,6 +687,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 5;
         }
 
         .back-button:hover {
@@ -679,6 +708,7 @@
             font-size: 14px;
             cursor: pointer;
             transition: var(--transition);
+            z-index: 5;
         }
 
         .skip-button:hover {
@@ -799,6 +829,41 @@
             .modal-content {
                 border-radius: var(--radius) var(--radius) 0 0;
             }
+            
+            .modal-title {
+                font-size: 20px;
+                padding: 0 50px;
+            }
+            
+            .modal-subtitle {
+                font-size: 14px;
+            }
+            
+            .choice-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 12px;
+            }
+            
+            .choice-card {
+                padding: 16px;
+            }
+            
+            .back-button, .skip-button {
+                z-index: 10;
+            }
+            
+            .modal-body {
+                padding: 16px;
+            }
+            
+            .recommendation-card {
+                padding: 12px;
+            }
+            
+            .menu-meta {
+                font-size: 12px;
+                gap: 8px;
+            }
         }
 
         .shake {
@@ -811,8 +876,20 @@
             75% { transform: translateX(5px); }
         }
 
-        .success-pulse {
-            animation: successPulse 0.6s ease;
+        .recommendation-card .menu-footer {
+            margin-top: 12px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .recommendation-card .menu-meta {
+            gap: 12px;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .recommendation-card .price-add-group {
+            flex-shrink: 0;
         }
 
         @keyframes successPulse {
@@ -843,7 +920,7 @@
     <!-- Search Section -->
     <section class="search-section">
         <div class="search-container">
-            <span class="search-icon">Search</span>
+            <span class="search-icon">🔍</span>
             <input type="text" class="search-input" placeholder="Search for dishes, cuisines..." onkeyup="searchMenu()">
         </div>
     </section>
@@ -866,7 +943,7 @@
     </section>
 
     <!-- Floating Cart -->
-    <div class="floating-cart" id="floatingCart" style="display: none;" onclick="openCart()">
+    <div class="floating-cart" id="floatingCart" style="display: none;" onclick="window.openCart()">
         <span class="cart-items-count" id="cartCount">0</span>
         <span>View Order</span>
         <span class="cart-total-amount" id="cartTotal">₹0</span>
@@ -935,15 +1012,15 @@
                 <button class="back-button" onclick="showStep(2)">←</button>
                 <div class="modal-header">
                     <h2 class="modal-title">Perfect matches for you!</h2>
-                    <p class="modal-subtitle">Tap to select what looks good</p>
+                    <p class="modal-subtitle">Add items using the ADD button</p>
                 </div>
                 <div class="modal-body" id="recommendationsBody">
                     <!-- Recommendations will be rendered here -->
                 </div>
                 <div class="modal-footer">
                     <button class="modal-btn secondary" onclick="closePersonalization()">Browse Menu</button>
-                    <button class="modal-btn primary" onclick="addRecommendations()">
-                        Add to Order (<span id="selectedCount">0</span>)
+                    <button class="modal-btn primary" onclick="closePersonalization()">
+                        Done (<span id="selectedCount">0</span> items in cart)
                     </button>
                 </div>
             </div>
@@ -962,8 +1039,10 @@
             </div>
             <div class="modal-footer">
                 <button class="modal-btn secondary" onclick="closeCart()">Add More</button>
-                <button class="modal-btn primary" onclick="placeOrder()">
-                    Place Order • <span id="finalTotal">₹0</span>
+                <button class="modal-btn primary" onclick="window.placeOrder(event)">
+                    <span>Place Order</span>
+                    <span>•</span>
+                    <span id="finalTotal">₹0</span>
                 </button>
             </div>
         </div>
@@ -980,7 +1059,6 @@
         <div class="success-icon">🎉</div>
         <h2 style="margin-bottom: 12px;">Order Confirmed!</h2>
         <p style="color: var(--gray); margin-bottom: 8px;">Your food is being prepared</p>
-        <p style="color: var(--primary); font-weight: 600;">Estimated time: 20-25 minutes</p>
         <p style="margin-top: 20px; font-size: 14px; color: var(--gray);">Order #<strong style="color: var(--dark);" id="orderNumber"></strong></p>
     </div>
 
@@ -1673,15 +1751,20 @@
             const itemCount = Object.values(cart).reduce((sum, qty) => sum + qty, 0);
             const total = Object.entries(cart).reduce((sum, [id, qty]) => {
                 const item = menuData.find(i => i.id === parseInt(id));
-                return sum + (item.price * qty);
+                return sum + (item ? item.price * qty : 0);
             }, 0);
             
             const floatingCart = document.getElementById('floatingCart');
             
             if (itemCount > 0) {
                 floatingCart.style.display = 'flex';
+                floatingCart.style.pointerEvents = 'all';
+                floatingCart.style.cursor = 'pointer';
                 document.getElementById('cartCount').textContent = itemCount;
                 document.getElementById('cartTotal').textContent = `₹${total}`;
+                
+                // Log for debugging
+                console.log('Cart updated - Items:', itemCount, 'Total:', total);
                 
                 // Animate cart appearance
                 if (!floatingCart.classList.contains('shown')) {
@@ -1701,7 +1784,7 @@
         function startPersonalization() {
             document.getElementById('personalizationModal').classList.add('active');
             showStep(1);
-            personalizationData = { diet: null, mood: null, selected: [] };
+            personalizationData = { diet: null, mood: null, selected: [], currentStep: 1 };
             preventBodyScroll(true);
         }
 
@@ -1839,7 +1922,7 @@
             recommendationsBody.innerHTML = recommendations.map(item => {
                 const isSelected = personalizationData.selected.includes(item.id);
                 return `
-                    <div class="recommendation-card ${isSelected ? 'selected' : ''}" onclick="toggleRecommendation(${item.id}, event)">
+                    <div class="recommendation-card ${isSelected ? 'selected' : ''}" data-item-id="${item.id}" onclick="toggleRecommendation(${item.id}, event)">
                         ${isSelected ? `<div class="recommendation-selected">✓</div>` : ''}
                         <div class="menu-header">
                             <div class="menu-title-group">
@@ -1863,13 +1946,13 @@
                                 <span class="price">₹${item.price}</span>
                                 ${cart[item.id] ? `
                                     <div class="quantity-controller" onclick="event.stopPropagation()">
-                                        <button class="qty-btn" onclick="updateCartFromRecommendation(${item.id}, -1, event)">−</button>
+                                        <button class="qty-btn" onclick="event.stopPropagation(); updateCartFromRecommendation(${item.id}, -1, event)">−</button>
                                         <span class="qty-number">${cart[item.id]}</span>
-                                        <button class="qty-btn" onclick="updateCartFromRecommendation(${item.id}, 1, event)">+</button>
+                                        <button class="qty-btn" onclick="event.stopPropagation(); updateCartFromRecommendation(${item.id}, 1, event)">+</button>
                                     </div>
                                 ` : `
                                     <div class="add-button-group">
-                                        <button class="add-button" onclick="updateCartFromRecommendation(${item.id}, 1, event)">
+                                        <button class="add-button" onclick="event.stopPropagation(); updateCartFromRecommendation(${item.id}, 1, event)">
                                             ADD
                                         </button>
                                     </div>
@@ -1884,33 +1967,24 @@
         }
 
         function toggleRecommendation(itemId, event) {
-            // Don't toggle if clicking on buttons
-            if (event && (event.target.classList.contains('qty-btn') || event.target.classList.contains('add-button'))) {
+            // Don't toggle if clicking on buttons or quantity controller
+            if (event && (event.target.classList.contains('qty-btn') || 
+                         event.target.classList.contains('add-button') ||
+                         event.target.classList.contains('quantity-controller') ||
+                         event.target.classList.contains('qty-number'))) {
                 return;
             }
             
-            // Find the clicked card
-            const clickedCard = Array.from(document.querySelectorAll('.recommendation-card')).find(card => 
-                card.onclick.toString().includes(itemId.toString())
-            );
-            
-            if (clickedCard) {
-                clickedCard.classList.toggle('selected');
-            }
-            
-            const index = personalizationData.selected.indexOf(itemId);
-            if (index > -1) {
-                personalizationData.selected.splice(index, 1);
-            } else {
-                personalizationData.selected.push(itemId);
-            }
-            
-            updateSelectedCount();
+            // Don't allow selection/deselection by clicking the card
+            // Selection happens automatically when adding to cart
+            return;
         }
 
         // Separate function for cart updates from recommendations
         function updateCartFromRecommendation(itemId, change, event) {
-            event.stopPropagation(); // Prevent card selection toggle
+            if (event) {
+                event.stopPropagation(); // Prevent card selection toggle
+            }
             
             const item = menuData.find(i => i.id === itemId);
             const currentQty = cart[itemId] || 0;
@@ -1919,11 +1993,37 @@
             if (newQty === 0) {
                 delete cart[itemId];
                 showToast(`${item.name} removed from cart`, 'Removed');
+                
+                // Remove from selected items if quantity becomes 0
+                const index = personalizationData.selected.indexOf(itemId);
+                if (index > -1) {
+                    personalizationData.selected.splice(index, 1);
+                    const card = document.querySelector(`[data-item-id="${itemId}"]`);
+                    if (card) {
+                        card.classList.remove('selected');
+                        const checkmark = card.querySelector('.recommendation-selected');
+                        if (checkmark) {
+                            checkmark.remove();
+                        }
+                    }
+                    updateSelectedCount();
+                }
             } else {
                 cart[itemId] = newQty;
                 
                 if (currentQty === 0) {
                     showToast(`${item.name} added to cart`, 'Added');
+                    // Mark as selected when first adding to cart
+                    const card = document.querySelector(`[data-item-id="${itemId}"]`);
+                    if (card && !personalizationData.selected.includes(itemId)) {
+                        personalizationData.selected.push(itemId);
+                        card.classList.add('selected');
+                        const checkmark = document.createElement('div');
+                        checkmark.className = 'recommendation-selected';
+                        checkmark.textContent = '✓';
+                        card.insertBefore(checkmark, card.firstChild);
+                        updateSelectedCount();
+                    }
                 } else {
                     showToast(`${item.name} quantity updated to ${newQty}`, 'Updated');
                 }
@@ -1941,39 +2041,37 @@
             const item = menuData.find(i => i.id === itemId);
             const isSelected = personalizationData.selected.includes(itemId);
             
-            // Find the card and update its content
-            const cards = document.querySelectorAll('.recommendation-card');
-            cards.forEach(card => {
-                if (card.onclick.toString().includes(itemId.toString())) {
-                    const priceAddGroup = card.querySelector('.price-add-group');
-                    if (priceAddGroup) {
-                        const priceSpan = priceAddGroup.querySelector('.price');
-                        priceSpan.innerHTML = `₹${item.price}`;
-                        
-                        // Update the add button area
-                        const addArea = priceAddGroup.querySelector('.add-button-group, .quantity-controller');
-                        if (addArea) {
-                            if (cart[itemId]) {
-                                addArea.outerHTML = `
-                                    <div class="quantity-controller" onclick="event.stopPropagation()">
-                                        <button class="qty-btn" onclick="updateCartFromRecommendation(${itemId}, -1, event)">−</button>
-                                        <span class="qty-number">${cart[itemId]}</span>
-                                        <button class="qty-btn" onclick="updateCartFromRecommendation(${itemId}, 1, event)">+</button>
-                                    </div>
-                                `;
-                            } else {
-                                addArea.outerHTML = `
-                                    <div class="add-button-group">
-                                        <button class="add-button" onclick="updateCartFromRecommendation(${itemId}, 1, event)">
-                                            ADD
-                                        </button>
-                                    </div>
-                                `;
-                            }
-                        }
+            // Find the card by data attribute
+            const card = document.querySelector(`[data-item-id="${itemId}"]`);
+            if (!card) return;
+            
+            const priceAddGroup = card.querySelector('.price-add-group');
+            if (priceAddGroup) {
+                const priceSpan = priceAddGroup.querySelector('.price');
+                priceSpan.innerHTML = `₹${item.price}`;
+                
+                // Update the add button area
+                const addArea = priceAddGroup.querySelector('.add-button-group, .quantity-controller');
+                if (addArea) {
+                    if (cart[itemId]) {
+                        addArea.outerHTML = `
+                            <div class="quantity-controller" onclick="event.stopPropagation()">
+                                <button class="qty-btn" onclick="event.stopPropagation(); updateCartFromRecommendation(${itemId}, -1, event)">−</button>
+                                <span class="qty-number">${cart[itemId]}</span>
+                                <button class="qty-btn" onclick="event.stopPropagation(); updateCartFromRecommendation(${itemId}, 1, event)">+</button>
+                            </div>
+                        `;
+                    } else {
+                        addArea.outerHTML = `
+                            <div class="add-button-group">
+                                <button class="add-button" onclick="event.stopPropagation(); updateCartFromRecommendation(${itemId}, 1, event)">
+                                    ADD
+                                </button>
+                            </div>
+                        `;
                     }
                 }
-            });
+            }
         }
 
         function updateSelectedCount() {
@@ -1981,44 +2079,41 @@
         }
 
         function addRecommendations() {
-            if (personalizationData.selected.length === 0) {
-                // Shake button if nothing selected
-                const button = document.querySelector('#step3 .modal-btn.primary');
-                if (button) {
-                    button.classList.add('shake');
-                    setTimeout(() => {
-                        button.classList.remove('shake');
-                    }, 500);
-                }
-                return;
-            }
-            
-            personalizationData.selected.forEach(itemId => {
-                cart[itemId] = (cart[itemId] || 0) + 1;
-            });
-            
+            // Close the modal without doing anything else
+            // Items are already in cart from clicking ADD buttons
             closePersonalization();
-            renderMenu();
-            updateCartUI();
             
-            // Show success message
-            const floatingCart = document.getElementById('floatingCart');
-            floatingCart.classList.add('success-pulse');
-            setTimeout(() => {
-                floatingCart.classList.remove('success-pulse');
-            }, 600);
+            // Show success message if there are items in cart
+            const itemCount = Object.values(cart).reduce((sum, qty) => sum + qty, 0);
+            if (itemCount > 0) {
+                showToast('Ready to view your order!', '✓');
+                const floatingCart = document.getElementById('floatingCart');
+                floatingCart.classList.add('success-pulse');
+                setTimeout(() => {
+                    floatingCart.classList.remove('success-pulse');
+                }, 600);
+            }
         }
 
         function closePersonalization() {
             document.getElementById('personalizationModal').classList.remove('active');
             preventBodyScroll(false);
+            // Re-render menu to ensure everything is in sync
+            renderMenu();
+            updateCartUI();
         }
 
         // Cart modal
-        function openCart() {
-            document.getElementById('cartModal').classList.add('active');
-            renderCart();
-            preventBodyScroll(true);
+        window.openCart = function() {
+            console.log('Opening cart modal...');
+            const cartModal = document.getElementById('cartModal');
+            if (cartModal) {
+                cartModal.classList.add('active');
+                renderCart();
+                preventBodyScroll(true);
+            } else {
+                console.error('Cart modal not found!');
+            }
         }
 
         function closeCart() {
@@ -2104,14 +2199,24 @@
             }
         }
 
-        function placeOrder() {
+        // Place order function
+        window.placeOrder = function(event) {
             if (Object.keys(cart).length === 0) return;
             
-            // Animate button
-            const btn = event.target;
+            // Prevent any default behavior
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            // Get the button element
+            const btn = document.querySelector('#cartModal .modal-btn.primary');
+            if (!btn) return;
+            
             const originalContent = btn.innerHTML;
-            btn.innerHTML = '<span class="loading-spinner"></span> Placing order...';
+            btn.innerHTML = '<span class="loading-spinner"></span><span>Placing order...</span>';
             btn.disabled = true;
+            btn.style.pointerEvents = 'none';
             
             // Simulate API call
             setTimeout(() => {
@@ -2138,6 +2243,7 @@
                 // Reset button
                 btn.innerHTML = originalContent;
                 btn.disabled = false;
+                btn.style.pointerEvents = 'all';
             }, 1500);
         }
     </script>
